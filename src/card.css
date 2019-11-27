@@ -1,0 +1,45 @@
+.card-board{
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-template-rows: 20% 20% 20% 20% 20%;
+}
+
+
+.card-container{
+  background-color: rgb(207, 166, 122);
+  color: black;
+  width: 250px;
+  height: 150px;
+  margin: 10px;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+.card-content{
+  background-color: rgba(255, 204, 128, 0.7);
+  width: 100%;
+  text: black;
+  font-size: 24pt;
+  font-variant: small-caps;
+  border-radius: 5px;
+  grid-column-start: 2;
+  grid-row-start: 2;
+}
+
+.unrevealed-card-container{
+  background-color: rgb(207, 166, 122);
+}
+
+.assassian-card-container{
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.agent-card-container{
+  background-color: rgba(0, 255, 0, 0.3);
+}
+
+.neutral-card-container{
+  background-color: rgba(207, 166, 122);
+}

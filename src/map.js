@@ -1,19 +1,28 @@
 import React from 'react';
 
+const tile_info = (index) => {
+  return {
+    value: index,
+    type: 'neutral'
+  }
+}
+
 function Tile({value}){
   return (
-    <div>
-      {value}
+    <div className={`tile ${value}`}>
     </div>
   );
 }
 
-function Map(){
+function Map({my_locations}){
   return (
-    <div>
-      {Array(25).fill(0).map( (v, idx) => Tile({value: idx}))}
+    <div className="map-container">
+      <div className="map">
+        {my_locations.map( (v, idx) => Tile({value: my_locations[idx]}))}
+      </div>
     </div>
   );
 }
+
 
 export default Map;
