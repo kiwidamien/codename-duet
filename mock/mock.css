@@ -62,6 +62,17 @@ body{
     border: 1px solid rgb(235, 238, 167);
 }
 
+.card-agent{
+    background-color: rgb(57, 167, 57);
+}
+
+.card-assasian{
+    background-color: rgb(0,0,0);
+}
+
+.card-neutral{
+    background-color: rgb(237, 185, 122);
+}
 
 .history-area{
     background-color: rgb(230, 240, 240);
@@ -96,17 +107,17 @@ body{
     bottom: 0;
   }
 
-  .map-agent{
-      background-color: rgb(57, 167, 57);
-  }
+.map-agent{
+    background-color: rgb(57, 167, 57);
+}
 
-  .map-assassian{
-      background-color: rgb(0,0,0);
-  }
+.map-assassian{
+    background-color: rgb(0,0,0);
+}
 
-  .map-neutral{
-      background-color: rgb(237, 185, 122);
-  }
+.map-neutral{
+    background-color: rgb(237, 185, 122);
+}
 
 .control-area{
     background-color: rgb(255,255,255);
