@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './history.css';
-import {STATUS} from './constants.js';
+import {STATUS, REASON} from './constants.js';
 
 
 function History({turns}){
@@ -12,16 +12,21 @@ function History({turns}){
 }
 
 
-/*
-<div>
-  You gave <span className="clue-word">elephant</span> for <span className="clue-number">4</span>
-  <ul>
-    <li>Agent <span className="clue-word">bake</span> found</li>
-    <li>Agent <span className="clue-word">tiramasu</span> found</li>
-    <li>Bystander <span className="clue-word">example</span> identified</li>
-  </ul>
-</div>
-*/
+const parse_reason = (player, turn_end) => {
+  switch(turn_end){
+    case REASON.BYSTANDER_GUESS:
+    return 'Bystander chosen, turn ended';
+    case REASON.USED_GUESSES:
+    return 'Made same number of guesses as clues';
+    case REASON.OUT_OF_GUESSES:
+    return 'Ran out of guesses';
+    case REASON.DEATH_GUESS:
+    return 'Selected assasian';
+    default:
+    return 'Bad reason for turn end';
+  }
+}
+
 
 function HistoryTurn({player, clue, number, guesses, turn_end}){
   return (
@@ -30,9 +35,11 @@ function HistoryTurn({player, clue, number, guesses, turn_end}){
       <ul>
         {guesses.map( (guess) => GuessRecord(guess) )}
       </ul>
+      <i>{parse_reason(player, turn_end)}</i>
     </div>
   );
 }
+
 
 function GuessRecord({word, result}){
   let inner_html = '';
@@ -42,7 +49,7 @@ function GuessRecord({word, result}){
       inner_html = (<li>Agent <span className="clue-word">{word}</span> found</li>);
       break;
     case STATUS.NEUTRAL:
-      inner_html = (<li>Bystander <span className="clue-word">{word}</span> indentified</li>);
+      inner_html = (<li>Bystander <span className="clue-word">{word}</span> identified</li>);
       break;
     case STATUS.ASSASIAN:
       inner_html = (<li>Assasian <span className="clue-word">{word}</span> contacted</li>);

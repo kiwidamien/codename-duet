@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
-import Map from './map.js';
 import {STATUS, REASON} from './constants.js';
-import {Card, CardLayout} from './card.js';
 
-//import './map.css';
-import './history.css';
+import Map from './map.js';
+import {CardLayout} from './card.js';
 import History from './history.js';
+import Message from './message.js';
+
+
 
 const MAP = [
   'assassian', 'agent', 'agent', 'neutral', 'neutral',
@@ -74,13 +74,13 @@ const TURNS = [
 function App() {
   return (
     <div className="App">
-      <div className="info-area">
-              Whose turn it is
-      </div>
-      <div className="play-area">
-        <CardLayout card_objects={CARDS}/>
 
-         <History turns={TURNS}/>
+      <Message />
+
+      <div className="play-area">
+
+        <CardLayout card_objects={CARDS}/>
+        <History turns={TURNS}/>
 
          <div className="control-area">
                  <input placeholder="Type your one-word clue..."/>
@@ -90,10 +90,7 @@ function App() {
 
         <Map my_locations={MAP}/>
 
-
-
       </div>
-
     </div>
   );
 }
