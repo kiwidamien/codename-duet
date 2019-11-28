@@ -79,6 +79,14 @@ body{
     border: 8px solid rgb(127, 127, 0);
 }
 
+.clue-word{
+  font-variant: small-caps;
+}
+
+.clue-number{
+  font-variant: small-caps;
+}
+
 .map-area{
     background-color: rgb(255,255,255);
     border: 8px solid rgb(127, 127, 0);
@@ -126,8 +134,8 @@ body{
     height: 60%;
 }
 
-/* 
- * How to make a square grid? Look at 
+/*
+ * How to make a square grid? Look at
  * https://stackoverflow.com/questions/46548987/a-grid-layout-with-responsive-squares
  */
 
@@ -137,14 +145,14 @@ body{
     grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
     grid-gap: 10px;
   }
-  
+
   .square {
     background: cadetblue;
     padding-top: 100%; /* padding trick directly on the grid item */
     box-sizing: border-box;
     position: relative;
   }
-  
+
   .square .content { /* absolutely positioned */
     position: absolute;
     top: 0;

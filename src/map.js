@@ -1,4 +1,5 @@
 import React from 'react';
+import './map.css';
 
 const tile_info = (index) => {
   return {
@@ -9,15 +10,15 @@ const tile_info = (index) => {
 
 function Tile({value}){
   return (
-    <div className={`tile ${value}`}>
+    <div className={`map-cell map-${value}`}>
     </div>
   );
 }
 
 function Map({my_locations}){
   return (
-    <div className="map-container">
-      <div className="map">
+    <div className="map-area">
+      <div className="map-board">
         {my_locations.map( (v, idx) => Tile({value: my_locations[idx]}))}
       </div>
     </div>

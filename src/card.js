@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import './card.css'
 
-function CardLayout({words}){
+function CardLayout({card_objects}){
   return (
-    <div className='card-board'>
-      {words.map( (word) => Card({word}) )}
+    <div className='card-area'>
+      <div className='card-board'>
+        {card_objects.map( (card_object) => Card(card_object) )}
+      </div>
     </div>
   );
 }
 
-function Card({word, onClick}){
+function Card({word, status, onClick}){
   return (
-    <div className='card-container assassian-card-container'>
-      <div className='card-content'>
-      {word}
-      </div>
+    <div className={`card card-${status}`}>
+      <div className='card-word'>{word}</div>
     </div>
   );
 }
