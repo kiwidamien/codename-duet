@@ -72,21 +72,17 @@ const gameStateReducer = (gameState, action) => {
     }
   }
 
-function App({initialGameState}) {
-
-  initialGameState = initialGameState || getInitialGameState();
-  const [gameState, gameStateDispatch] = useReducer(gameStateReducer, initialGameState);
-  const clientState = gameStateToClientState(gameState, 0);
-  const mapState = gameStateToMap(gameState, 0);
-  const mapStateOther= gameStateToMap(gameState, 1);
+function Client({gameState, gameStateDispatch, player}) {
+  const otherPlayer = 1 - player;
+  const clientState = gameStateToClientState(gameState, player);
+  const mapState = gameStateToMap(gameState, otherPlayer);
 
   const clickOnCard = (card_number) => {
     gameStateDispatch({
-      player: 0,
+      player: player,
       type: 'CLICK_CARD',
       card_number
     })
-
   }
 
 
@@ -112,9 +108,18 @@ function App({initialGameState}) {
           To guess: {gameState.current_turn.number}
           Guessed: {gameState.current_turn.guesses.length}
         </div>
-        <Map my_locations={mapStateOther} />
-
       </div>
+    </div>
+  );
+}
+
+function App({initialGameState}) {
+  initialGameState = initialGameState || getInitialGameState();
+  const [gameState, gameStateDispatch] = useReducer(gameStateReducer, initialGameState);
+  return(
+    <div>
+      <Client gameState={gameState} gameStateDispatch={gameStateDispatch} player={0} />
+      <Client gameState={gameState} gameStateDispatch={gameStateDispatch} player={1} />
     </div>
   );
 }
