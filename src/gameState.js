@@ -6,10 +6,9 @@ const gameStateToClientState = (gameState, playerNumber) => {
   clientState.cards = gameState.cards.map( (card) => {
     return {
       word: card.word,
-      status: card.revealed[playerNumber] ? card.identity[playerNumber] : STATUS.UNKNOWN
+      status: (card.revealed[playerNumber] === STATUS.UNKNOWN) ?  STATUS.UNKNOWN : card.revealed[playerNumber]
     }
   });
-
   return clientState;
 }
 
@@ -67,31 +66,31 @@ const TURNS = [
 
 const GameState = {
   cards: [
-    {word: 'apple', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [false, false] },
-    {word: 'mandarin', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'persimmon', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'javascript', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'kiwi', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'love', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'jedi', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'clone', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [false, false]},
-    {word: 'danish', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'tiramasu', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'landscape', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'wildlife', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'hike', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [false, false]},
-    {word: 'embassy', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'parasite', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'elephant', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'travel', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'siblings', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'testing', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'example', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'teacher', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'astronaut', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'bootcamp', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [false, false]},
-    {word: 'bake', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]},
-    {word: 'meditate', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [false, false]}
+    {word: 'apple', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN] },
+    {word: 'mandarin', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'persimmon', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'javascript', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'kiwi', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'love', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'jedi', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'clone', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'danish', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'tiramasu', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'landscape', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'wildlife', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'hike', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'embassy', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'parasite', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'elephant', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'travel', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'siblings', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'testing', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'example', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'teacher', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'astronaut', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'bootcamp', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'bake', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'meditate', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]}
   ],
   history: TURNS,
   current_turn: {
@@ -100,6 +99,7 @@ const GameState = {
     clue: 'elephant',
     number: 4,
     guesses: [],
+    turn_end: REASON.NOT_OVER
   },
   message: 'this is a message',
   game_over: false
@@ -107,13 +107,18 @@ const GameState = {
 
 const getInitialGameState = () => {
   const our_deck = shuffle(DECK);
-
-  const initialGameState = {...GameState};
-  initialGameState.cards = initialGameState.cards.map( (card, index) => {
+  const shuffledCards = GameState.cards.map( (card, index) => {
     return {...card,
-      identity: our_deck[index]
+      identity: our_deck[index],
+      revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]
     }
   });
+
+  const initialGameState = {...GameState,
+    cards: shuffledCards,
+    history: [],
+    game_over: false
+  };
   return initialGameState;
 }
 

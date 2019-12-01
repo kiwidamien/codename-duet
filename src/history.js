@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './history.css';
 import {STATUS, REASON} from './constants.js';
 
@@ -22,6 +22,8 @@ const parse_reason = (player, turn_end) => {
     return 'Ran out of guesses';
     case REASON.DEATH_GUESS:
     return 'Selected assasian';
+    case REASON.NOT_OVER:
+    return 'Turn still progressing';
     default:
     return 'Bad reason for turn end';
   }
@@ -43,7 +45,7 @@ function HistoryTurn({player, clue, number, guesses, turn_end}){
 
 function GuessRecord({word, result}){
   let inner_html = '';
-
+  console.log('Here we have ' + word + ' with result=' + result);
   switch(result){
     case STATUS.AGENT:
       inner_html = (<li>Agent <span className="clue-word">{word}</span> found</li>);

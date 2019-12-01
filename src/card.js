@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './card.css'
 
 function CardLayout({card_objects, handleClickOnCard}){

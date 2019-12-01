@@ -10,7 +10,9 @@ const REASON = {
   USED_GUESS: 'used all regular guesses',
   OUT_OF_GUESSES: 'used all regular guesses and catch up guess',
   BYSTANDER_GUESS: 'guessed a bystander',
-  DEATH_GUESS: 'guessed an assasian'
+  DEATH_GUESS: 'guessed an assasian',
+  NOT_OVER: '',
+  PASS: 'chose to pass',
 };
 
 const PHASE = {
