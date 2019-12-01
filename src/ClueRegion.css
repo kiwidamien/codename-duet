@@ -1,0 +1,6 @@
+.control-area{
+    background-color: rgb(255,255,255);
+    border: 8px solid rgb(127, 127, 0);
+    width: 100%;
+    height: 60%;
+}

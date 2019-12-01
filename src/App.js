@@ -5,6 +5,7 @@ import Map from './map.js';
 import {CardLayout} from './card.js';
 import History from './history.js';
 import Message from './message.js';
+import ClueRegion from './ClueRegion.js';
 import {gameStateToClientState, gameStateToMap, getInitialGameState} from './gameState.js';
 
 const processCardClick = (gameState, action) => {
@@ -99,12 +100,10 @@ function App({initialGameState}) {
         <CardLayout card_objects={clientState.cards} handleClickOnCard={clickOnCard}/>
         <History turns={clientState.history}/>
 
-         <div className="control-area">
-                 <input placeholder="Type your one-word clue..."/>
-                 <input placeholder="# of words"/>
-                 <button type="submit">Submit!</button>
-                 <button type="submit">Pass</button>
-         </div>
+        <ClueRegion
+          clue={clientState.current_turn.clue}
+          number={clientState.current_turn.number}
+        />
 
         <Map my_locations={mapState}/>
         <div>
