@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import './card.css'
 
-function CardLayout({card_objects}){
+function CardLayout({card_objects, handleClickOnCard}){
+
+  const my_card_objects = card_objects.map( (object, index) => {
+    return {
+      ...object,
+      onClick: () => {handleClickOnCard(index);}
+    }
+  });
+
   return (
     <div className='card-area'>
       <div className='card-board'>
-        {card_objects.map( (card_object) => Card(card_object) )}
+        {my_card_objects.map( (card_object) => Card(card_object) )}
       </div>
     </div>
   );
@@ -13,7 +21,7 @@ function CardLayout({card_objects}){
 
 function Card({word, status, onClick}){
   return (
-    <div className={`card card-${status}`}>
+    <div className={`card card-${status}`} onClick={onClick} key={word}>
       <div className='card-word'>{word}</div>
     </div>
   );

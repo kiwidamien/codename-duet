@@ -2,10 +2,10 @@ import React from 'react';
 import './info.css';
 
 
-function Message(){
+function Message({message}){
   return (
   <div className="info-area">
-        Whose turn it is
+        {message}
   </div>
   );
 }
