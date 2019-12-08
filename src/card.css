@@ -47,3 +47,7 @@
 .card-neutral{
     background-color: rgb(237, 185, 122);
 }
+
+.disabled{
+  opacity: 40%;
+}

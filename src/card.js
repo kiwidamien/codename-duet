@@ -1,12 +1,16 @@
 import React from 'react';
 import './card.css'
 
-function CardLayout({card_objects, handleClickOnCard}){
+function CardLayout({card_objects, handleClickOnCard, canClick}){
+  if (!canClick){
+    handleClickOnCard = ()=>{};
+  }
 
   const my_card_objects = card_objects.map( (object, index) => {
     return {
       ...object,
-      onClick: () => {handleClickOnCard(index);}
+      onClick: () => {handleClickOnCard(index);},
+      canClick
     }
   });
 
@@ -19,9 +23,9 @@ function CardLayout({card_objects, handleClickOnCard}){
   );
 }
 
-function Card({word, status, onClick}){
+function Card({word, status, onClick, canClick}){
   return (
-    <div className={`card card-${status}`} onClick={onClick} key={word}>
+    <div className={`card card-${status} ${canClick ? '' : 'disabled'}`} onClick={onClick} key={word}>
       <div className='card-word'>{word}</div>
     </div>
   );

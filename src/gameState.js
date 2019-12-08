@@ -1,5 +1,12 @@
 import {STATUS, DECK, REASON, PHASE} from './constants.js';
+import {turnState} from './turn.js';
 
+
+interface cardState{
+  word: string,
+  identity: [string, string],
+  revealed: [string, string]
+};
 
 const gameStateToClientState = (gameState, playerNumber) => {
   const clientState = {...gameState};
@@ -9,6 +16,9 @@ const gameStateToClientState = (gameState, playerNumber) => {
       status: (card.revealed[playerNumber] === STATUS.UNKNOWN) ?  STATUS.UNKNOWN : card.revealed[playerNumber]
     }
   });
+  clientState.canClick = (gameState.current_turn.player === playerNumber) && (gameState.current_turn.phase === PHASE.CLICK);
+  clientState.canClue = (gameState.current_turn.player === (1-playerNumber)) && (gameState.current_turn.phase === PHASE.CLUE);
+  clientState.canPass = (clientState.canClick) && (gameState.current_turn.guesses.length > 0);
   return clientState;
 }
 
@@ -35,6 +45,24 @@ const shuffle = (orig_array) => {
   return array;
 }
 
+
+const makeGameStateNewTurn = (gameState, player, reason) => {
+  const newTurn = {
+    player: 1-player,
+    phase: PHASE.CLUE,
+    clue: '',
+    number: 2,
+    guesses: [],
+    turn_end: REASON.NOT_OVER
+  };
+
+  const newGameState = {...gameState,
+    current_turn: newTurn
+  };
+  newGameState.history[newGameState.history.length-1].turn_end = reason;
+  newGameState.history.push(newGameState.current_turn);
+  return newGameState;
+}
 
 const TURNS = [
   {
@@ -95,9 +123,7 @@ const GameState = {
   history: TURNS,
   current_turn: {
     player: 0,
-    phase: PHASE.CLICK,
-    clue: 'elephant',
-    number: 4,
+    phase: PHASE.CLUE,
     guesses: [],
     turn_end: REASON.NOT_OVER
   },
@@ -123,4 +149,4 @@ const getInitialGameState = () => {
 }
 
 
-export {gameStateToClientState, gameStateToMap, shuffle, getInitialGameState};
+export {gameStateToClientState, gameStateToMap, shuffle, getInitialGameState, makeGameStateNewTurn};
