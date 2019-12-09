@@ -6,6 +6,7 @@ import History from './history.js';
 import Message from './message.js';
 import ClueRegion from './ClueRegion.js';
 import {gameStateToClientState, gameStateToMap, getInitialGameState} from './gameState.js';
+import AlertDiv from './AlertDiv.js';
 
 import gameStateReducer from './reducers/gameReducer.js';
 
@@ -39,9 +40,10 @@ function Client({gameState, gameStateDispatch, player}) {
     })
   }
 
-  console.log(clientState);
   return (
     <div className="App">
+
+      {clientState.validationError && <AlertDiv duration={5000} message={clientState.validationError}/>}
 
       <Message message={`Player ${player}: ${clientState.message}`}/>
 

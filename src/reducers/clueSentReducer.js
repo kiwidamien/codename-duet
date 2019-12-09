@@ -1,9 +1,10 @@
 import {PHASE} from '../constants.js';
 
 const clueValidation = (clue, number) => {
-  const validation_data = {isValid: true, message: ''};
-
+  const validation_data = {isValid: false, message: ''};
+  console.log('validating clue');
   if (!clue){
+    console.log('no clue!');
     return {...validation_data,
       message: 'No word provided for the clue'
     }
@@ -33,7 +34,7 @@ const clueValidation = (clue, number) => {
       message: "Cannot have numbers greater than 10"
     }
   }
-  return validation_data;
+  return {...validation_data, isValid: true};
 }
 
 

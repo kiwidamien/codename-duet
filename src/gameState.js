@@ -19,6 +19,7 @@ const gameStateToClientState = (gameState, playerNumber) => {
   clientState.canClick = (gameState.current_turn.player === playerNumber) && (gameState.current_turn.phase === PHASE.CLICK);
   clientState.canClue = (gameState.current_turn.player === (1-playerNumber)) && (gameState.current_turn.phase === PHASE.CLUE);
   clientState.canPass = (clientState.canClick) && (gameState.current_turn.guesses.length > 0);
+  clientState.validationError = gameState.validationErrors[playerNumber];
   return clientState;
 }
 
@@ -128,7 +129,8 @@ const GameState = {
     turn_end: REASON.NOT_OVER
   },
   message: 'this is a message',
-  game_over: false
+  game_over: false,
+  validationErrors: ['', 'Not your turn']
 }
 
 const getInitialGameState = () => {
