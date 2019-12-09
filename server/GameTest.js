@@ -27,3 +27,6 @@ console.log(g.clickCardNumber({playerIndex: 1, cardIndex: 5}));
 console.log(g.clickCardNumber({playerIndex: 1, cardIndex: 10}));
 console.log(`Agents revealed: ${g.numAgentsRevealed()}`);
 console.log(`Agents remaining: ${g.numAgentsRemaining()}`);
+console.log(g.sendClue({playerIndex: 1, clue: 'rabbit'}));
+console.log(g.sendClue({playerIndex: 1, clue: 'rabbit', number: 1}));
+
