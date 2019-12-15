@@ -1,20 +1,20 @@
-import React, {useReducer} from 'react';
+import React from 'react';
 
 import Map from './map.js';
 import {CardLayout} from './card.js';
 import History from './history.js';
 import Message from './message.js';
 import ClueRegion from './ClueRegion.js';
-import {gameStateToClientState, gameStateToMap} from './gameState.js';
+//import {gameStateToClientState, gameStateToMap} from './gameState.js';
 import AlertDiv from './AlertDiv.js';
 
-import gameStateReducer from './reducers/gameReducer.js';
+//import gameStateReducer from './reducers/gameReducer.js';
 
 
-function Client({gameState, gameStateDispatch, player}) {
-  const otherPlayer = 1 - player;
-  const clientState = gameStateToClientState(gameState, player);
-  const mapState = gameStateToMap(gameState, otherPlayer);
+function Client({clientState, gameStateDispatch, player}) {
+  //const otherPlayer = 1 - player;
+  console.log(clientState);
+  //const mapState = gameStateToMap(gameState, otherPlayer);
 
   const clickOnCard = (card_number) => {
     gameStateDispatch({
@@ -32,6 +32,7 @@ function Client({gameState, gameStateDispatch, player}) {
   }
 
   const onSendClue = (clue, number) => {
+    console.log('sent clue button pushed');
     gameStateDispatch({
       player,
       type: 'CLUE_SENT',
@@ -65,13 +66,14 @@ function Client({gameState, gameStateDispatch, player}) {
           canClue={clientState.canClue}
         />
 
-        <Map my_locations={mapState}/>
+        <Map my_locations={clientState.mapState}/>
+
         <div>
-          Player {gameState.current_turn.player}<br/>
-          Word: {gameState.current_turn.clue}<br/>
-          Phase: {gameState.current_turn.phase}<br/>
-          To guess: {gameState.current_turn.number}<br/>
-          Guessed: {gameState.current_turn.guesses.length}<br/>
+          Player {clientState.current_turn.player}<br/>
+          Word: {clientState.current_turn.clue}<br/>
+          Phase: {clientState.current_turn.phase}<br/>
+          To guess: {clientState.current_turn.number}<br/>
+          Guessed: {clientState.current_turn.guesses.length}<br/>
         </div>
       </div>
     </div>

@@ -1,5 +1,10 @@
 import {STATUS, DECK, REASON, PHASE} from './constants.js';
 
+const gameStateToMap = (gameState, playerNumber) =>{
+  return gameState.cards.map( (card) => card.identity[playerNumber]);
+}
+
+
 const gameStateToClientState = (gameState, playerNumber) => {
   const clientState = {...gameState};
   clientState.cards = gameState.cards.map( (card) => {
@@ -12,14 +17,9 @@ const gameStateToClientState = (gameState, playerNumber) => {
   clientState.canClue = (gameState.current_turn.player === (1-playerNumber)) && (gameState.current_turn.phase === PHASE.CLUE);
   clientState.canPass = (clientState.canClick) && (gameState.current_turn.guesses.length > 0);
   clientState.validationError = gameState.validationErrors[playerNumber];
+  clientState.mapState = gameStateToMap(gameState, playerNumber);
   return clientState;
 }
-
-
-const gameStateToMap = (gameState, playerNumber) =>{
-  return gameState.cards.map( (card) => card.identity[playerNumber]);
-}
-
 
 const shuffle = (orig_array) => {
   let array = [...orig_array];

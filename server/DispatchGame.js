@@ -1,22 +1,26 @@
 const {PHASE, REASON, STATUS, DECK} = require('./constants.js');
 
+const gameStateToMap = (game, playerNumber) =>{
+  return game.cards.map( (card) => card.identity[playerNumber]);
+}
 
 const getClientState = (game, {playerIndex}) => {
     const clientState = {
-        cards: [game.cards.map( (card) => {
+        cards: game.cards.map( (card) => {
             return {
                 word: card.word,
                 status: card.revealed[playerIndex]
             }
-        })],
+        }),
         history: [...game.history],
         current_turn: {...game.current_turn},
-        nessage: game.message,
+        message: game.message,
         game_over: game.game_over,
         validationError: game.validationErrors[playerIndex],
         canClick: game.canClick({playerIndex}),
         canClue: game.canGiveClue({playerIndex}),
-        canPass: game.canPass({playerIndex})
+        canPass: game.canPass({playerIndex}),
+        mapState: gameStateToMap(game, playerIndex)
     };
 
     return clientState;
@@ -25,7 +29,8 @@ const getClientState = (game, {playerIndex}) => {
 const getClientStates = (game, success) => {
   return {
     success: true,
-    clientStates: [getClientState(game, 0), getClientState(game, 1)]
+    clientStates: [getClientState(game, {playerIndex: 0}),
+                   getClientState(game, {playerIndex: 1})]
   }
 }
 
@@ -41,7 +46,10 @@ const dispatchClickPass = (game, {playerIndex}) => {
 }
 
 const dispatchSendClue = (game, {playerIndex, clue, number}) => {
-    const {success} = game.sendClue(playerIndex, clue, number);
+    const {success, message} = game.sendClue(playerIndex, clue, number);
+    console.log(`sent clue (${clue} for ${number} from ${playerIndex}) and got result ${success}`);
+    console.log(message);
+    console.log(getClientState(game, {playerIndex:0}));
     return getClientStates(game, success);
 }
 
