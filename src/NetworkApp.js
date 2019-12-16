@@ -28,7 +28,8 @@ class NetworkApp extends Component {
     }
   }
 
-  clientAction(action){
+  clientAction(bareAction){
+    const action = {...bareAction, hashValue: this.props.player_game_id};
     switch(action.type){
       case 'CLICK_CARD':
         newClickCardReducer(this.socket, action);
@@ -50,12 +51,12 @@ class NetworkApp extends Component {
 
   changePlayer(evt){
     this.setState({playerNumber: evt.target.value});
-    this.socket.emit('refresh', {playerIndex: evt.target.value});
+    this.socket.emit('refresh', {hashValue: this.props.player_game_id});
   }
 
   render() {
     if (!this.state.clientState){
-      this.socket.emit('refresh', {playerIndex: 0});
+      this.socket.emit('refresh', {hashValue: this.props.player_game_id});
       return (
         <div>
         Loading
@@ -69,6 +70,8 @@ class NetworkApp extends Component {
           <option value={0}>Player 0</option>
           <option value={1}>Player 1</option>
         </select>
+
+        Game ID: {this.props.player_game_id}
 
         <Client
          clientState={this.state.clientState}

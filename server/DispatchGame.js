@@ -1,3 +1,6 @@
+const GamePlayerHash = require('./GamePool.js');
+
+
 const gameStateToMap = (game, playerNumber) =>{
   return game.cards.map( (card) => card.identity[playerNumber]);
 }

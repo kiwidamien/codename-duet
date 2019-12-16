@@ -1,23 +1,23 @@
-const newClueSentReducer = (socket, {player, clue, number}) => {
+const newClueSentReducer = (socket, {hashValue, clue, number}) => {
   console.log('called newClueSentReducer');
-  console.log(`Used parameters ${player}, ${clue}, ${number}`);
-  socket.emit('give_clue', {playerIndex: player, clue, number});
+  console.log(`Used parameters ${hashValue}, ${clue}, ${number}`);
+  socket.emit('give_clue', {hashValue, clue, number});
 }
 
-const newClickCardReducer = (socket, {player, cardIndex}) => {
+const newClickCardReducer = (socket, {hashValue, cardIndex}) => {
   console.log('called ClickCardReducer');
-  console.log(`Params: playerIndex ${player} and cardIndex ${cardIndex}`);
-  socket.emit('click_card', {playerIndex: player, cardIndex: cardIndex});
+  console.log(`Params: playerIndex ${hashValue} and cardIndex ${cardIndex}`);
+  socket.emit('click_card', {hashValue, cardIndex});
 }
 
-const newPassReducer = (socket, {player}) => {
+const newPassReducer = (socket, {hashValue}) => {
   console.log('Called newPassReducer');
-  socket.emit('pass', {playerIndex: player});
+  socket.emit('pass', {hashValue});
 }
 
-const restartGame = (socket, {player}) => {
-  console.log('Restarting game')
-  socket.emit('restart', {playerIndex: player});
+const restartGame = (socket, {hashValue}) => {
+  console.log(`Restarting game ${hashValue}`)
+  socket.emit('restart', {hashValue});
 }
 
 export {newClueSentReducer, newClickCardReducer, newPassReducer, restartGame};
