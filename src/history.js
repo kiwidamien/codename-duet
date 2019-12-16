@@ -6,7 +6,7 @@ import {STATUS, REASON} from './constants.js';
 function History({turns}){
   return (
     <div className="history-area">
-      {turns.map( (turn, index) => HistoryTurn({...turn, turn_number: index+1}))}
+      {turns.map( (turn, index) => HistoryTurn({...turn, turn_number: index+1, player: turn.player_clue}))}
     </div>
   );
 }
@@ -39,7 +39,7 @@ function HistoryTurn({player, clue, number, guesses, turn_end, turn_number}){
   return (
     <div>
       <div className='turn_number'>Turn number {turn_number}</div>
-      Player {`${1-player}`} gave <span className="clue-word">{clue}</span> for <span className="clue-number">{number}</span>
+      Player {player} gave <span className="clue-word">{clue}</span> for <span className="clue-number">{number}</span>
       <ul>
         {guesses.map( (guess) => GuessRecord(guess) )}
       </ul>

@@ -20,26 +20,26 @@ const clueValidation = (clue, number) => {
         message: 'No word provided for the clue'
       }
     }
-  
+
     if (!number){
       return {...validation_data,
         message: 'No number provided for the clue'
       }
     }
-  
+
     if (!parseInt(number)){
       return {...validation_data,
         message: `${number} is not a valid number`
       }
     }
-  
+
     let myNumber = parseInt(number);
     if (myNumber < 0){
       return {...validation_data,
         message: "Cannot have negative numbers (1 - 10) only"
       }
     }
-  
+
     if (myNumber > 10){
       return {...validation_data,
         message: "Cannot have numbers greater than 10"
@@ -96,23 +96,27 @@ const TEST_CARDS = [
 
 class Game{
     constructor(){
-        const our_deck = DECK; //shuffle(DECK);
-        this.cards = TEST_CARDS.map( (card, index) => {
-            return {...card,
-                identity: our_deck[index],
-                revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]
-            }
-        });
-        this.history = [];
-        this.current_turn = {
-            player_clue: 0,
-            phase: PHASE.CLUE,
-            guesses: [],
-            turn_end: REASON.NOT_OVER
-        };
-        this.message = '';
-        this.game_over = false;
-        this.validationErrors = ['', ''];
+      this.restart();
+    }
+
+    restart(){
+      const our_deck = DECK; //shuffle(DECK);
+      this.cards = TEST_CARDS.map( (card, index) => {
+          return {...card,
+              identity: our_deck[index],
+              revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]
+          }
+      });
+      this.history = [];
+      this.current_turn = {
+          player_clue: 0,
+          phase: PHASE.CLUE,
+          guesses: [],
+          turn_end: REASON.NOT_OVER
+      };
+      this.message = '';
+      this.game_over = false;
+      this.validationErrors = ['', ''];
     }
 
     canClick({playerIndex}){
@@ -151,7 +155,7 @@ class Game{
             return {success: false, revealed: thisCard.revealed[playerIndex],
                     reason: 'card already revealed'};
         }
-        
+
         switch(revealedIdentity){
             case STATUS.ASSASIAN:
             case STATUS.AGENT:
@@ -165,7 +169,7 @@ class Game{
             default:
                 break;
         }
-        this._updateStateOnClick({word: thisCard.word, 
+        this._updateStateOnClick({word: thisCard.word,
                                   revealed: revealedIdentity});
 
         return {success: true, revealed: revealedIdentity, reason:''}
@@ -196,7 +200,7 @@ class Game{
             number: parseInt(number)
         }
         this.history = [
-            ...this.history.slice(0, -1),
+            ...this.history,
             {...this.current_turn}
         ];
         return {success: true, message: ''};

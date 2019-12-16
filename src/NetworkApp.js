@@ -2,22 +2,18 @@ import React, { Component } from 'react'
 import Client from './Client.js';
 import socketIOClient from 'socket.io-client'
 
-import {getInitialGameState, gameStateToClientState} from './gameState.js';
-//import gameStateReducer from './reducers/gameReducer.js';
-import {newClueSentReducer, newClickCardReducer} from './reducers/clientClueReducer.js';
+import {newClueSentReducer, newClickCardReducer, newPassReducer, restartGame} from './reducers/clientClueReducer.js';
 
 const URL = 'http://localhost:2000'
 
 class NetworkApp extends Component {
   socket = socketIOClient(URL);
   state = {
-    clientState: gameStateToClientState(getInitialGameState(), 1),
+    clientState: null,
     playerNumber: 0
   }
 
   componentDidMount() {
-
-
 
     this.socket.on('server_state_update', (clientState) => {
       console.log('new client state');
@@ -25,13 +21,6 @@ class NetworkApp extends Component {
       this.setState({clientState: clientState});
       console.log('Updated client state');
     });
-
-    this.socket.onmessage = (evt) => {
-      const message = JSON.parse(evt.data)
-      console.log(evt)
-      console.log(evt.data);
-      console.log('Just processed message');
-    }
 
     this.socket.onclose = () => {
       console.log('disconnected')
@@ -48,19 +37,32 @@ class NetworkApp extends Component {
         newClueSentReducer(this.socket, action);
       break
       case 'PASS':
+        newPassReducer(this.socket, action);
+      break
+      case 'RESTART':
+        restartGame(this.socket, action);
       break
       default:
+      console.log(`Unknown action ${action.type}`);
       return
     }
   }
 
   changePlayer(evt){
     this.setState({playerNumber: evt.target.value});
+    this.socket.emit('refresh', {playerIndex: evt.target.value});
   }
 
   render() {
-    //const initialGameState = getInitialGameState();
-    //const [gameState, gameStateDispatch] = useReducer(gameStateReducer, initialGameState);
+    if (!this.state.clientState){
+      this.socket.emit('refresh', {playerIndex: 0});
+      return (
+        <div>
+        Loading
+        </div>
+      );
+    }
+
     return (
       <div>
         <select onChange={(evt) => this.changePlayer(evt)} value={this.state.playerNumber}>

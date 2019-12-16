@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 
-const {dispatchClickCard, dispatchClickPass, dispatchSendClue, dispatchRefresh} = require('./DispatchGame.js');
+const {dispatchClickCard, dispatchClickPass, dispatchSendClue, dispatchRefresh, dispatchRestart} = require('./DispatchGame.js');
 
 const Game = require('./Game.js');
 
@@ -21,11 +21,11 @@ var IO = require('socket.io')(server, {});
 const MYGAME = new Game();
 
 const sendClientState = ({clientStates}, socket_list, playerIndex) => {
-  console.log('Called sendClientState');
-  console.log(clientStates);
+  //console.log('Called sendClientState');
+  //console.log(clientStates);
   socket_list.forEach( (socket) => {
-    console.log(`Sending player ${playerIndex} info to client ${socket.id}`);
-    console.log(clientStates[playerIndex]);
+    //console.log(`Sending player ${playerIndex} info to client ${socket.id}`);
+    //console.log(clientStates[playerIndex]);
     socket.emit(
       'server_state_update',
       clientStates[playerIndex]
@@ -45,8 +45,9 @@ IO.sockets.on('connection', (socket) => {
   socket.on('disconnect', () => {socket.active = false;});
 
   socket.on('click_card', ({playerIndex, cardIndex}) => {
-    const {success, clientStates} = dispatchClickCard(MYGAME, {playerIndex: playerIndex, cardIndex: cardIndex});
-    console.log(`Clicked card, have client states ${clientStates}`);
+    const {success, clientStates} = dispatchClickCard(MYGAME, {playerIndex: parseInt(playerIndex),
+                                                               cardIndex: parseInt(cardIndex)});
+    console.log(`Clicked card, have client states ${success}`);
     sendClientState({clientStates}, SOCKET_LIST, playerIndex);
   });
 
@@ -60,8 +61,13 @@ IO.sockets.on('connection', (socket) => {
     sendClientState({clientStates}, SOCKET_LIST, playerIndex);
   });
 
-  socket.on('refresh', () => {
-    const {success, clientStates} = dispatchRefresh();
+  socket.on('refresh', ({playerIndex}) => {
+    const {success, clientStates} = dispatchRefresh(MYGAME, {playerIndex});
+    sendClientState({clientStates}, SOCKET_LIST, playerIndex);
+  });
+
+  socket.on('restart', ({playerIndex}) => {
+    const {success, clientStates} = dispatchRestart(MYGAME, {playerIndex});
     sendClientState({clientStates}, SOCKET_LIST, playerIndex);
   });
 

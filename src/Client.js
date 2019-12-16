@@ -5,22 +5,16 @@ import {CardLayout} from './card.js';
 import History from './history.js';
 import Message from './message.js';
 import ClueRegion from './ClueRegion.js';
-//import {gameStateToClientState, gameStateToMap} from './gameState.js';
 import AlertDiv from './AlertDiv.js';
 
-//import gameStateReducer from './reducers/gameReducer.js';
 
 
 function Client({clientState, gameStateDispatch, player}) {
-  //const otherPlayer = 1 - player;
-  console.log(clientState);
-  //const mapState = gameStateToMap(gameState, otherPlayer);
-
   const clickOnCard = (card_number) => {
     gameStateDispatch({
       player: player,
       type: 'CLICK_CARD',
-      card_number
+      cardIndex: card_number
     })
   }
 
@@ -41,12 +35,37 @@ function Client({clientState, gameStateDispatch, player}) {
     })
   }
 
+  const onClickRestart = () => {
+    console.log('Restarting game');
+    gameStateDispatch({
+      player,
+      type: 'RESTART'
+    });
+  }
+
   return (
     <div className="App">
 
       {clientState.validationError && <AlertDiv duration={5000} message={clientState.validationError}/>}
 
-      <Message message={`Player ${player}: ${clientState.message}`}/>
+      <Message
+        canClue={clientState.canClue}
+        canClick={clientState.canClick}
+        turnNumber={clientState.history.length}
+        turnPhase={clientState.current_turn.phase}
+        gameOver={clientState.game_over}
+        clueInfo={{
+          word: clientState.current_turn.clue,
+          number: clientState.current_turn.number,
+          guesses: clientState.current_turn.guesses.length
+        }}
+        agentInfo={{
+          numAgentsFound: 3,
+          numYourAgentsRemaining: 4
+        }}
+        onClickRestart={onClickRestart}
+        message='Player 4'
+      />
 
       <div className="play-area">
 
@@ -68,13 +87,6 @@ function Client({clientState, gameStateDispatch, player}) {
 
         <Map my_locations={clientState.mapState}/>
 
-        <div>
-          Player {clientState.current_turn.player}<br/>
-          Word: {clientState.current_turn.clue}<br/>
-          Phase: {clientState.current_turn.phase}<br/>
-          To guess: {clientState.current_turn.number}<br/>
-          Guessed: {clientState.current_turn.guesses.length}<br/>
-        </div>
       </div>
     </div>
   );
