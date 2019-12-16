@@ -1,5 +1,4 @@
 import React from 'react';
-import FlashMessage from 'react-flash-message';
 import './AlertDiv.css';
 
 const AlertDiv = ({message, duration_millis}) => {
