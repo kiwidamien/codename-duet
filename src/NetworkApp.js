@@ -14,6 +14,9 @@ class NetworkApp extends Component {
   }
 
   componentDidMount() {
+    this.socket.on('connect', () => {
+      this.socket.emit('join_game', this.props.player_game_id);
+    });
 
     this.socket.on('server_state_update', (clientState) => {
       console.log('new client state');

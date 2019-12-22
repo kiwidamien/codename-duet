@@ -16,21 +16,41 @@ console.log("Server started");
 console.log(`Directory: ${__dirname}`);
 
 var SOCKET_LIST = [];
+var SOCKET_HASH = {};
 
 var IO = require('socket.io')(server, {});
 
 
 
-const sendClientState = ({clientStates}, socket_list, playerIndex) => {
-  //console.log('Called sendClientState');
-  //console.log(clientStates);
-  socket_list.forEach( (socket) => {
-    //console.log(`Sending player ${playerIndex} info to client ${socket.id}`);
-    //console.log(clientStates[playerIndex]);
+const sendClientState = ({clientStates}, socket_list, hashValue) => {
+  const {playerIndex, otherPlayerHash} = GamePlayerHash[hashValue];
+  const otherPlayerIndex = GamePlayerHash[otherPlayerHash];
+
+  console.log(`hashValue is ${hashValue}`);
+  console.log(SOCKET_HASH);
+
+  SOCKET_HASH[hashValue].forEach( (socket) => {
     socket.emit(
       'server_state_update',
       clientStates[playerIndex]
     )
+  });
+
+  (SOCKET_HASH[otherPlayerHash] || []).forEach( (socket) => {
+    socket.emit(
+      'server_state_update',
+      clientStates[otherPlayerIndex]
+    );
+  });
+};
+
+const sendRefreshState = ({clientStates}, socket_list, hashValue) => {
+  const {playerIndex} = GamePlayerHash[hashValue];
+  SOCKET_HASH[hashValue].forEach( (socket) => {
+    socket.emit(
+      'server_state_update',
+      clientStates[playerIndex]
+    );
   });
 };
 
@@ -45,36 +65,43 @@ IO.sockets.on('connection', (socket) => {
 
   socket.on('disconnect', () => {socket.active = false;});
 
+  socket.on('join_game', (hashValue) => {
+    console.log('join_game called');
+    socket.hashValue = hashValue;
+    SOCKET_HASH[hashValue] = (SOCKET_HASH[hashValue] || []);
+    SOCKET_HASH[hashValue].push(socket);
+  });
+
   socket.on('click_card', ({hashValue, cardIndex}) => {
     const {game, playerIndex} = GamePlayerHash[hashValue];
     const {success, clientStates} = dispatchClickCard(game, {playerIndex: parseInt(playerIndex),
                                                                cardIndex: parseInt(cardIndex)});
     console.log(`Clicked card, have client states ${success}`);
-    sendClientState({clientStates}, SOCKET_LIST, playerIndex);
+    sendClientState({clientStates}, SOCKET_LIST, hashValue);
   });
 
   socket.on('pass', ({hashValue}) => {
     const {game, playerIndex} = GamePlayerHash[hashValue];
     const {success, clientStates} = dispatchClickPass(game, {playerIndex});
-    sendClientState({clientStates}, SOCKET_LIST, playerIndex);
+    sendClientState({clientStates}, SOCKET_LIST, hashValue);
   });
 
   socket.on('give_clue', ({hashValue, clue, number}) => {
     const {game, playerIndex} = GamePlayerHash[hashValue];
     const {success, clientStates} = dispatchSendClue(game, {playerIndex, clue, number});
-    sendClientState({clientStates}, SOCKET_LIST, playerIndex);
+    sendClientState({clientStates}, SOCKET_LIST, hashValue);
   });
 
   socket.on('refresh', ({hashValue}) => {
     const {game, playerIndex} = GamePlayerHash[hashValue];
     const {success, clientStates} = dispatchRefresh(game, {playerIndex});
-    sendClientState({clientStates}, SOCKET_LIST, playerIndex);
+    sendRefreshState({clientStates}, SOCKET_LIST, hashValue);
   });
 
   socket.on('restart', ({hashValue}) => {
     const {game, playerIndex} = GamePlayerHash[hashValue];
     const {success, clientStates} = dispatchRestart(game, {playerIndex});
-    sendClientState({clientStates}, SOCKET_LIST, playerIndex);
+    sendClientState({clientStates}, SOCKET_LIST, hashValue);
   });
   //
   // socket.on('subscribeToTimer', (interval) => {
