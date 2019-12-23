@@ -7,7 +7,7 @@ const server = require('http').Server(app);
 const {dispatchClickCard, dispatchClickPass, dispatchSendClue, dispatchRefresh, dispatchRestart} = require('./DispatchGame.js');
 
 //const Game = require('./Game.js');
-const GamePlayerHash = require('./GamePool.js');
+const {GamePlayerHash} = require('./GamePool.js');
 
 console.log(CONSTANTS);
 
@@ -20,6 +20,10 @@ var SOCKET_HASH = {};
 
 var IO = require('socket.io')(server, {});
 
+
+app.get('/game_list', (request, response, next) => {
+  return response.send(GamePlayerHash);
+})
 
 
 const sendClientState = ({clientStates}, socket_list, hashValue) => {
@@ -45,14 +49,27 @@ const sendClientState = ({clientStates}, socket_list, hashValue) => {
 };
 
 const sendRefreshState = ({clientStates}, socket_list, hashValue) => {
-  const {playerIndex} = GamePlayerHash[hashValue];
+  const {playerIndex} = (GamePlayerHash[hashValue] || {playerIndex: -1});
+  if ((!SOCKET_HASH[hashValue]) || (playerIndex === -1)){
+    return false;
+  }
   SOCKET_HASH[hashValue].forEach( (socket) => {
     socket.emit(
       'server_state_update',
       clientStates[playerIndex]
     );
   });
+  return true;
 };
+
+const sendClientStateDRY = ({clientStates}, socket_list, hashValue) => {
+  const {otherPlayerHash} = GamePlayerHash[hashValue];
+  let success = sendRefreshState({clientStates}, socket_list, hashValue);
+  console.log(success);
+  success = success && sendRefreshState({clientStates}, socket_list, otherPlayerHash);
+  return success;
+}
+
 
 IO.sockets.on('connection', (socket) => {
   socket.id = SOCKET_LIST.length;
@@ -77,32 +94,35 @@ IO.sockets.on('connection', (socket) => {
     const {success, clientStates} = dispatchClickCard(game, {playerIndex: parseInt(playerIndex),
                                                                cardIndex: parseInt(cardIndex)});
     console.log(`Clicked card, have client states ${success}`);
-    sendClientState({clientStates}, SOCKET_LIST, hashValue);
+    sendClientStateDRY({clientStates}, SOCKET_LIST, hashValue);
   });
 
   socket.on('pass', ({hashValue}) => {
     const {game, playerIndex} = GamePlayerHash[hashValue];
-    const {success, clientStates} = dispatchClickPass(game, {playerIndex});
-    sendClientState({clientStates}, SOCKET_LIST, hashValue);
+    const {clientStates} = dispatchClickPass(game, {playerIndex});
+    sendClientStateDRY({clientStates}, SOCKET_LIST, hashValue);
   });
 
   socket.on('give_clue', ({hashValue, clue, number}) => {
     const {game, playerIndex} = GamePlayerHash[hashValue];
-    const {success, clientStates} = dispatchSendClue(game, {playerIndex, clue, number});
-    sendClientState({clientStates}, SOCKET_LIST, hashValue);
+    const {clientStates} = dispatchSendClue(game, {playerIndex, clue, number});
+    sendClientStateDRY({clientStates}, SOCKET_LIST, hashValue);
   });
 
   socket.on('refresh', ({hashValue}) => {
+    console.log(GamePlayerHash);
+    console.log(GamePlayerHash[hashValue]);
     const {game, playerIndex} = GamePlayerHash[hashValue];
-    const {success, clientStates} = dispatchRefresh(game, {playerIndex});
+    const {clientStates} = dispatchRefresh(game, {playerIndex});
     sendRefreshState({clientStates}, SOCKET_LIST, hashValue);
   });
 
   socket.on('restart', ({hashValue}) => {
     const {game, playerIndex} = GamePlayerHash[hashValue];
-    const {success, clientStates} = dispatchRestart(game, {playerIndex});
-    sendClientState({clientStates}, SOCKET_LIST, hashValue);
+    const {clientStates} = dispatchRestart(game, {playerIndex});
+    sendClientStateDRY({clientStates}, SOCKET_LIST, hashValue);
   });
+
   //
   // socket.on('subscribeToTimer', (interval) => {
   //   console.log(`Client is subscribing to timer to update every ${interval} milliseconds`);
