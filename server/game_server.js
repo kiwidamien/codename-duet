@@ -55,6 +55,7 @@ const sendInvalidHashMessage = (hashValue) => {
   if ((!SOCKET_HASH[hashValue]) || (playerIndex === -1)){
     return false;
   }
+  console.log('invalid hash');
   SOCKET_HASH[hashValue].forEach( (socket) => {
     socket.emit(
       'invalid_hash',
@@ -99,37 +100,35 @@ IO.sockets.on('connection', (socket) => {
   });
 
   socket.on('click_card', ({hashValue, cardIndex}) => {
-    const {game, playerIndex} = GamePlayerHash[hashValue];
-    const {success, clientStates} = dispatchClickCard(game, {playerIndex: parseInt(playerIndex),
-                                                               cardIndex: parseInt(cardIndex)});
-    console.log(`Clicked card, have client states ${success}`);
-    sendClientStateDRY({clientStates}, hashValue);
+    safeRouteFromHash({hashValue, cardIndex: parseInt(cardIndex)}, hashValue, dispatchClickCard);
   });
 
   socket.on('pass', ({hashValue}) => {
-    const {game, playerIndex} = GamePlayerHash[hashValue];
-    const {clientStates} = dispatchClickPass(game, {playerIndex});
-    sendClientStateDRY({clientStates}, hashValue);
+    safeRouteFromHash({hashValue}, hashValue, dispatchClickPass);
   });
 
   socket.on('give_clue', ({hashValue, clue, number}) => {
-    const {game, playerIndex} = GamePlayerHash[hashValue];
-    const {clientStates} = dispatchSendClue(game, {playerIndex, clue, number});
-    sendClientStateDRY({clientStates}, hashValue);
+    safeRouteFromHash({clue, number}, hashValue, dispatchSendClue);
   });
 
   socket.on('refresh', ({hashValue}) => {
+    console.log('Refresh request recieved');
     console.log(GamePlayerHash);
     console.log(GamePlayerHash[hashValue]);
+    if (!GamePlayerHash[hashValue]){
+      console.log('Sending invalid hash message');
+      socket.emit(
+        'invalid_hash',
+        hashValue);
+      return;
+    }
     const {game, playerIndex} = GamePlayerHash[hashValue];
     const {clientStates} = dispatchRefresh(game, {playerIndex});
     sendRefreshState({clientStates}, hashValue);
   });
 
   socket.on('restart', ({hashValue}) => {
-    const {game, playerIndex} = GamePlayerHash[hashValue];
-    const {clientStates} = dispatchRestart(game, {playerIndex});
-    sendClientStateDRY({clientStates}, hashValue);
+    safeRouteFromHash({hashValue}, hashValue, dispatchRestart);
   });
 
 });

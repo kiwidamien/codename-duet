@@ -28,6 +28,11 @@ ReactDOM.render(
      path='/new_game'>
      <NewGameForm />
      </Route>
+     <Route
+     exact
+     path='/404'>
+     <div>Game is not found</div>
+     </Route>
     <Route
      path='/game/:player_game_id'
      render={ ({match}) => <NetworkApp player_game_id={match.params.player_game_id}/> }

@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
 import Client from './Client.js';
 import socketIOClient from 'socket.io-client'
+import { Redirect } from "react-router-dom";
 
 import {newClueSentReducer, newClickCardReducer, newPassReducer, restartGame} from './reducers/clientClueReducer.js';
 
-const URL = 'http://localhost:2000'
+import {HOST_URL} from './constants';
 
 class NetworkApp extends Component {
-  socket = socketIOClient(URL);
+  socket = socketIOClient(HOST_URL);
   state = {
     clientState: null,
-    playerNumber: 0
+    playerNumber: 0,
+    gameNotFoundError: false
   }
 
   componentDidMount() {
@@ -27,8 +29,13 @@ class NetworkApp extends Component {
 
     this.socket.onclose = () => {
       console.log('disconnected')
-      this.socket = new WebSocket(URL);
+      this.socket = new WebSocket(HOST_URL);
     }
+
+    this.socket.on('invalid_hash', (hashValue) => {
+      console.log(`Unknown hash for game: ${hashValue}`);
+      this.setState({'gameNotFoundError': true});
+    });
   }
 
   clientAction(bareAction){
@@ -53,6 +60,11 @@ class NetworkApp extends Component {
   }
 
   render() {
+    if (this.state.gameNotFoundError){
+      return <Redirect to='/' />
+    }
+
+
     if (!this.state.clientState){
       this.socket.emit('refresh', {hashValue: this.props.player_game_id});
       return (

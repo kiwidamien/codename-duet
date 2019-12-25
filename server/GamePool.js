@@ -67,5 +67,5 @@ class GamePool{
   }
 }
 
-GLOBAL_POOL = new GamePool()
+const GLOBAL_POOL = new GamePool()
 module.exports = {GamePlayerHash, GamePool, GLOBAL_POOL}

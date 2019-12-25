@@ -11,6 +11,7 @@ import AlertDiv from './AlertDiv.js';
 
 
 function Client({clientState, gameStateDispatch, player}) {
+
   const clickOnCard = (card_number) => {
     gameStateDispatch({
       player: player,
