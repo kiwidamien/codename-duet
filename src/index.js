@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
 import NetworkApp from './NetworkApp';
+import Lobby from './lobby/Lobby';
+import NewGameForm from './lobby/NewGameForm';
 import * as serviceWorker from './serviceWorker';
 
 import {
@@ -16,9 +18,20 @@ ReactDOM.render(
   <div>
   <Router>
     <Route
+    exact
+     path='/'
+     >
+     <Lobby/>
+     </Route>
+     <Route
+     exact
+     path='/new_game'>
+     <NewGameForm />
+     </Route>
+    <Route
      path='/game/:player_game_id'
      render={ ({match}) => <NetworkApp player_game_id={match.params.player_game_id}/> }
-  />
+     />
   </Router>
   </div>
   , document.getElementById('root'));

@@ -4,6 +4,7 @@ import Map from './map.js';
 import {CardLayout} from './card.js';
 import History from './history.js';
 import Message from './message.js';
+import Modal from 'react-modal';
 import ClueRegion from './ClueRegion.js';
 import AlertDiv from './AlertDiv.js';
 
@@ -87,6 +88,7 @@ function Client({clientState, gameStateDispatch, player}) {
 
         <Map my_locations={clientState.mapState}/>
 
+        <Modal isOpen={clientState.game_over}>hello</Modal>
       </div>
     </div>
   );

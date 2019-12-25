@@ -37,7 +37,8 @@ const getClientStates = (game, success) => {
 
 
 const dispatchClickCard = (game, {playerIndex, cardIndex}) => {
-    const {success, reason} = game.clickCardNumber({playerIndex, cardIndex});
+    const {success, reason} = game.clickCardNumber({playerIndex: parseInt(playerIndex),
+                                                    cardIndex: parseInt(cardIndex)});
     console.log(`Card clicked by ${playerIndex} with index ${cardIndex}, result ${success} (${reason})`);
     return getClientStates(game, success);
 }

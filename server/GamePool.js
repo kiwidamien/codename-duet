@@ -58,9 +58,14 @@ class GamePool{
     return true;
   }
 
+  getGame(hashValue){
+    return GamePlayerHash[hashValue].game;
+  }
+
   getAllGames(){
     return GamePlayerHash;
   }
 }
 
-module.exports = {GamePlayerHash, GamePool}
+GLOBAL_POOL = new GamePool()
+module.exports = {GamePlayerHash, GamePool, GLOBAL_POOL}
