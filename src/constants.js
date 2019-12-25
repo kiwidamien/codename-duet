@@ -48,5 +48,6 @@ const DECK = [
   [STATUS.NEUTRAL, STATUS.NEUTRAL]
 ];
 
+const HOST_URL = 'http://localhost:2000';
 
-export {STATUS, REASON, DECK, PHASE};
+export {STATUS, REASON, DECK, PHASE, HOST_URL};

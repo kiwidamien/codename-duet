@@ -3,10 +3,10 @@ const {PHASE, REASON, STATUS, DECK} = require('./constants.js');
 const arrayEquals = (arr1, arr2) => {
     if (arr1 === arr2) return true;
     if (arr1 == null || arr2 == null) return false;
-    if (arr1.length != arr2.length) return false;
+    if (arr1.length !== arr2.length) return false;
 
     for (var i=0; i<arr1.length; i++){
-        if (arr1[i] != arr2[i]) return false;
+        if (arr1[i] !== arr2[i]) return false;
     }
     return true;
 }
@@ -100,7 +100,7 @@ class Game{
     }
 
     restart(){
-      const our_deck = DECK; //shuffle(DECK);
+      const our_deck = shuffle(DECK);
       this.cards = TEST_CARDS.map( (card, index) => {
           return {...card,
               identity: our_deck[index],
@@ -278,9 +278,9 @@ class Game{
         }
 
         const guessNumber = this.current_turn.guesses.length;
-        if ((guessNumber == this.current_turn.number + 1) &&
+        if ((guessNumber === this.current_turn.number + 1) &&
             (this.current_turn.number > 0) &&
-            (this.current_turn.phase == PHASE.CLICK)){
+            (this.current_turn.phase === PHASE.CLICK)){
                 this.makeNewTurn(REASON.OUT_OF_GUESSES);
             }
     }
