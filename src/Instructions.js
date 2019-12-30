@@ -39,8 +39,13 @@ const Instructions = () => {
                     There are 3 assassian cards on your map (black). One of them is an assassian
                     card for both of you, one is an agent that will respond to you, one is a bystander.
 
-                    Storywise, this means that out of the three people that would eliminate your partner, 
-                    one would actually talk to you!
+                    Storywise, this means that out of the three people that would eliminate your partner:
+                    <ul>
+                        <li>One trusts you but not your partner  (i.e. an agent that only you can approach)</li>
+                        <li>One would ignore you (a bystander) but will defend herself against your partner with deadly force</li>
+                        <li>One would eliminate either of you gladly</li>
+                    </ul> 
+                    Sadly, you only know how any given person/card responds to your partner.
                 </div>
 
             </div>
