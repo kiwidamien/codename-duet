@@ -53,4 +53,4 @@ const CLIENT_URL = 'http://localhost:3000';
 
 const NEW_GAME_URL = `${HOST_URL}/make_new_game`
 
-export {STATUS, REASON, DECK, PHASE, HOST_URL, NEW_GAME_URL};
+export {STATUS, REASON, DECK, PHASE, HOST_URL, NEW_GAME_URL, CLIENT_URL};
