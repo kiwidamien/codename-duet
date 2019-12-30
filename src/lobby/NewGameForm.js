@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import {Link} from 'react-router-dom';
 import drawRandomWords from './words.js';
-import {NEW_GAME_URL} from '../constants.js';
+import {NEW_GAME_URL, CLIENT_URL} from '../constants.js';
 import './new_game.css';
 
 
@@ -76,7 +76,7 @@ const NewGameForm = () => {
   <Modal isOpen={newGameURLs[0]}>
   <ul>
     <li><Link to={`/game/${newGameURLs[0]}`}>Your game (link)</Link></li>
-    <li>URL to send to friend (their game): {`http://localhost:3000/game/${newGameURLs[1]}`}</li>
+    <li>URL to send to friend (their game): {`${CLIENT_URL}/game/${newGameURLs[1]}`}</li>
   </ul>
   </Modal>
   </div>
