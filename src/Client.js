@@ -89,7 +89,6 @@ function Client({clientState, gameStateDispatch, player}) {
 
         <Map my_locations={clientState.mapState}/>
 
-        <Modal isOpen={clientState.game_over}>hello</Modal>
         <Instructions/>
       </div>
     </div>
