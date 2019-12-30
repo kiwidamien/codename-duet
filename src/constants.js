@@ -49,7 +49,7 @@ const DECK = [
 ];
 
 const HOST_URL = 'https://codename-duet-server.herokuapp.com';
-const CLIENT_URL = 'http://localhost:3000';
+const CLIENT_URL = 'http://codename-duet.herokuapp.com/';
 
 const NEW_GAME_URL = `${HOST_URL}/make_new_game`
 
