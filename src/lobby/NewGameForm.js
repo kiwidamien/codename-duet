@@ -36,7 +36,7 @@ const getDefaultWords = () => {
 const NewGameForm = () => {
   const [name, setName] = useState('');
   const [newGameURLs, setNewGameURLs] = useState(['', '']);
-  const [words, setWords] = useState(getDefaultWords());
+  const [words, setWords] = useState(drawRandomWords());
 
   return (
     <div class="upper-level-new-game">
