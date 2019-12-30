@@ -11,7 +11,7 @@ const {dispatchClickCard, dispatchClickPass, dispatchSendClue, dispatchRefresh, 
 //const Game = require('./Game.js');
 const {GamePlayerHash, GamePool, GLOBAL_POOL} = require('./GamePool.js');
 
-console.log(CONSTANTS);
+console.log(GamePlayerHash);
 
 server.listen(2000);
 console.log("Server started");
@@ -87,7 +87,7 @@ const safeRouteFromHash = (args, hashValue, callback) => {
   const game = GLOBAL_POOL.getGame(hashValue);
   const playerIndex = GLOBAL_POOL.getPlayerNumber(hashValue);
   const {clientStates} = callback(game, {...args, playerIndex});
-  sendClientStateDRY({clientStates}, SOCKET_LIST, hashValue);
+  sendClientStateDRY({clientStates}, hashValue);
 }
 
 IO.sockets.on('connection', (socket) => {
