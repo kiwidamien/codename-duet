@@ -10,10 +10,12 @@ const {dispatchClickCard, dispatchClickPass, dispatchSendClue, dispatchRefresh, 
 
 //const Game = require('./Game.js');
 const {GamePlayerHash, GamePool, GLOBAL_POOL} = require('./GamePool.js');
+const PORT = process.env.PORT || 2000;
 
 console.log(GamePlayerHash);
 
-server.listen(2000);
+server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
 console.log("Server started");
 console.log(`Directory: ${__dirname}`);
 
