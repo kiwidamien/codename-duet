@@ -1,6 +1,7 @@
 .history-area{
     background-color: rgb(230, 240, 240);
     border: 8px solid rgb(127, 127, 0);
+    overflow: auto;
 }
 
 .clue-word{

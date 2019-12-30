@@ -7,7 +7,7 @@ import Message from './message.js';
 import Modal from 'react-modal';
 import ClueRegion from './ClueRegion.js';
 import AlertDiv from './AlertDiv.js';
-
+import Instructions from './Instructions.js';
 
 
 function Client({clientState, gameStateDispatch, player}) {
@@ -90,6 +90,7 @@ function Client({clientState, gameStateDispatch, player}) {
         <Map my_locations={clientState.mapState}/>
 
         <Modal isOpen={clientState.game_over}>hello</Modal>
+        <Instructions/>
       </div>
     </div>
   );
