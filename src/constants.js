@@ -49,5 +49,6 @@ const DECK = [
 ];
 
 const HOST_URL = 'http://localhost:2000';
+const NEW_GAME_URL = `${HOST_URL}/make_new_game`
 
-export {STATUS, REASON, DECK, PHASE, HOST_URL};
+export {STATUS, REASON, DECK, PHASE, HOST_URL, NEW_GAME_URL};

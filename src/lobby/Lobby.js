@@ -14,7 +14,7 @@ import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom'
 import NewGameButton from './NewGameButton';
 import {HOST_URL} from '../constants';
-
+import "./lobby.css";
 
 const Lobby = () => {
   const [gameInfo, setGameInfo]  = useState([]);
@@ -28,6 +28,17 @@ const Lobby = () => {
       .finally(() => setLoading(false));
     }, []);
 
+
+  const theGames = {};
+  Object.keys(gameInfo).forEach( (gamePlayerHash) => {
+    const gamePlayerCombo = gameInfo[gamePlayerHash];
+    const gameHash = gamePlayerCombo['gameHash'];
+    if (!theGames[gameHash]){
+      theGames[gameHash] = {gameName: gamePlayerCombo.gameName, players: ['', '']};
+    }
+    theGames[gameHash].players[gamePlayerCombo.playerIndex] = `/game/${gamePlayerHash}`;
+  });
+
   return (
     <div>
 
@@ -39,20 +50,21 @@ const Lobby = () => {
       <div className='loading'>Loading...</div>
     ) : (
       <div>
-      <ul>
-      {Object.keys(gameInfo).map( (key) => {
-        const gameJoinData = {
-          gameName: gameInfo[key].gameName,
-          url_join: `/game/${key}`,
-          playerIndex: gameInfo[key].playerIndex
-        };
-        return (
-          <li><Link to={gameJoinData.url_join}>{gameJoinData.gameName} (Player {gameJoinData.playerIndex})</Link></li>
-        )})
-      }
-      </ul>
-
+      <div className="game-box-container">
+        {Object.keys(theGames).map(key => {
+          const thisGame = theGames[key];
+          return (
+            <div className="game-box">
+            <b>Game <span>{thisGame.gameName}</span>:</b>
+              <div className="game-box-links">
+                <Link to={thisGame.players[0]}>Player 0 Link</Link>
+                <Link to={thisGame.players[1]}>Player 1 Link</Link>
+              </div>
+            </div>
+          )
+        })}
       </div>
+    </div>
     )}
     <NewGameButton />
     </div>

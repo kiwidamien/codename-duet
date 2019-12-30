@@ -1,8 +1,8 @@
-body{
+.upper-level-new-game{
   margin: 10px 20%;
 }
 
-.new-word-grid{
+.new-word-grid {
   background-color: rgb(240, 240, 240);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -17,7 +17,7 @@ body{
   padding-bottom: 50px;
 }
 
-.new-word-grid > input {
+.new-word-grid  input {
   padding: 10px;
   margin: 10px 5px;
   font-size: 12pt;
@@ -28,10 +28,10 @@ body{
   display: flex;
   justify-content: space-between;
   width: 90%;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
-button {
+.upper-level-new-game  button {
   display: block;
   border-radius: 4px;
   width:20%;
@@ -42,15 +42,15 @@ button {
   border: none;
 }
 
-.submit-button{
+.upper-level-new-game .submit-button{
   background-color: #008CBA;
 }
 
-.cancel-button{
+.upper-level-new-game .cancel-button{
   background-color: #C22924;
 }
 
-a {
+.upper-level-new-game  a {
   display: block;
   border-radius: 4px;
   width:20%;

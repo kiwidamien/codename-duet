@@ -2,13 +2,24 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import {Link} from 'react-router-dom';
 import drawRandomWords from './words.js';
+import {NEW_GAME_URL} from '../constants.js';
 import './new_game.css';
 
 
-const makeNewGame = async (event, name, setNewGameURLs) => {
+const makeNewGame = async (event, name, setNewGameURLs, words) => {
   event.preventDefault();
   console.log('Making a new game');
-  fetch(`http://localhost:2000/make_new_game?name=${escape(name)}`)
+  if ((!words) || (!words[0])){
+    words = getDefaultWords();
+  }
+  console.log(JSON.stringify({name, words}))
+  fetch(NEW_GAME_URL, {
+    method: 'post',
+    body: JSON.stringify({name, words}),
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    }})
   .then(res => res.json())
   .then(games => {console.log(games); setNewGameURLs(games); });
 }
@@ -28,9 +39,9 @@ const NewGameForm = () => {
   const [words, setWords] = useState(getDefaultWords());
 
   return (
-    <div>
+    <div class="upper-level-new-game">
     <h2>New Game</h2>
-    <form className="new-game" onSubmit={(e) => makeNewGame(e, name, setNewGameURLs)}>
+    <form className="new-game" onSubmit={(e) => makeNewGame(e, name, setNewGameURLs, words)}>
     <label htmlFor="name">Name</label>
     <input
       type="text"
@@ -52,8 +63,8 @@ const NewGameForm = () => {
       </div>
 
       <div class="word-grid-controls">
-        <button onClick={() => setWords(drawRandomWords())}>Random Draw</button>
-        <button onClick={() => setWords(getDefaultWords())}>Default</button>
+        <button type="button" onClick={() => setWords(drawRandomWords())}>Random Draw</button>
+        <button type="button" onClick={() => setWords(getDefaultWords())}>Default</button>
       </div>
 
       <div class="word-grid-controls">

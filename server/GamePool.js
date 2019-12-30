@@ -3,10 +3,13 @@ const Game = require('./Game.js');
 const MYGAME = new Game();
 
 const GamePlayerHash = {
-  10: {gameName: 'default', game: MYGAME, playerIndex: 0, otherPlayerHash: 11},
-  11: {gameName: 'default', game: MYGAME, playerIndex: 1, otherPlayerHash: 10}
+  10: {gameName: 'default', game: MYGAME, playerIndex: 0, otherPlayerHash: 11, gameHash: 1011},
+  11: {gameName: 'default', game: MYGAME, playerIndex: 1, otherPlayerHash: 10, gameHash: 1011}
 }
 
+const GameHash = {
+  1011: [10, 11]
+}
 
 const randomGenerator = (MIN, MAX) => Math.floor(Math.random() * (MAX - MIN) + MIN);
 
@@ -26,13 +29,15 @@ class GamePool{
     return hashValue;
   }
 
-  makeNewGame(gameName){
-    const newGame = new Game();
+  makeNewGame(gameName, words){
+    const newGame = new Game(words);
     const hash1 = this._getNewHashValue();
     const hash2 = this._getNewHashValue();
-    GamePlayerHash[hash1] = {gameName, game: newGame, playerIndex: 0, otherPlayerHash: hash2};
-    GamePlayerHash[hash2] = {gameName, game: newGame, playerIndex: 1, otherPlayerHash: hash1};
-    return [hash1, hash2];
+    const gameHash = parseInt(hash1.toString() + hash2.toString());
+    GamePlayerHash[hash1] = {gameName, game: newGame, playerIndex: 0, otherPlayerHash: hash2, gameHash};
+    GamePlayerHash[hash2] = {gameName, game: newGame, playerIndex: 1, otherPlayerHash: hash1, gameHash};
+    GameHash[gameHash] = [hash1, hash2];
+    return [hash1, hash2, gameHash];
   }
 
   isValidHash(hashValue){

@@ -24,6 +24,8 @@ var IO = require('socket.io')(server, {});
 
 
 app.use(cors());
+app.use(express.json());
+
 
 app.get('/game_list', (request, response, next) => {
   return response.send(GamePlayerHash);
@@ -33,6 +35,13 @@ app.get('/make_new_game', (request, response, next) => {
   const name = request.query.name || 'default';
   console.log(`making new game ${name}`);
   const [hash1, hash2] = GLOBAL_POOL.makeNewGame(name);
+  return response.send([hash1, hash2]);
+})
+
+app.post('/make_new_game', (request, response, next) => {
+  const name = request.body['name'] || 'default';
+  const words = request.body['words'] || null;
+  const [hash1, hash2] = GLOBAL_POOL.makeNewGame(name, words);
   return response.send([hash1, hash2]);
 })
 

@@ -1,0 +1,25 @@
+.game-box-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.game-box  span {
+  color: #777;
+  font-variant: small-caps;
+}
+
+
+.game-box{
+  background-color: rgb(220, 245, 220);
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.game-box-links{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+}

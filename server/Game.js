@@ -65,7 +65,7 @@ const shuffle = (orig_array) => {
   return array;
 }
 
-const TEST_CARDS = [
+/*const TEST_CARDS = [
     {word: 'apple', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN] },
     {word: 'mandarin', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'persimmon', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
@@ -91,18 +91,27 @@ const TEST_CARDS = [
     {word: 'bootcamp', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'bake', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'meditate', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]}
-  ];
+  ];*/
+const DefaultWords = ['apple', 'mandarin', 'persimmon', 'javascript', 'kiwi',
+        'love', 'jedi', 'clone', 'danish', 'tiramasu',
+        'landscape', 'wildlife', 'hike', 'embassy', 'parasite',
+        'elephant', 'travel', 'siblings', 'testing', 'example',
+        'teacher', 'astronaut', 'bootcamp', 'bake', 'meditate'];
 
 
 class Game{
-    constructor(){
-      this.restart();
+    constructor(words){
+      this.restart(words);
     }
 
-    restart(){
+    restart(words){
       const our_deck = shuffle(DECK);
-      this.cards = TEST_CARDS.map( (card, index) => {
-          return {...card,
+      // This makes sure we have 25 words, regardless of the length of
+      // the array words
+      const our_words = DefaultWords.map( (w, index) => ((words && words[index]) || (w)) );
+      this.cards = our_words.map( (word, index) => {
+          return {
+              word,
               identity: our_deck[index],
               revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]
           }
