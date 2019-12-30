@@ -1,9 +1,9 @@
-const GamePlayerHash = require('./GamePool.js');
-
+const {STATUS} = require('./constants.js');
 
 const gameStateToMap = (game, playerNumber) =>{
   return game.cards.map( (card) => card.identity[playerNumber]);
 }
+
 
 const getClientState = (game, {playerIndex}) => {
     const clientState = {
@@ -21,7 +21,9 @@ const getClientState = (game, {playerIndex}) => {
         canClick: game.canClick({playerIndex}),
         canClue: game.canGiveClue({playerIndex}),
         canPass: game.canPass({playerIndex}),
-        mapState: gameStateToMap(game, 1 - playerIndex)
+        mapState: gameStateToMap(game, 1 - playerIndex),
+        allAgents: {found: game.numAgentsRevealed(), total: 15},
+        yourAgents: {found: 9 - game.numAgentsRemaining()[playerIndex], total: 9}
     };
 
     return clientState;

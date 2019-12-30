@@ -62,8 +62,8 @@ function Client({clientState, gameStateDispatch, player}) {
           guesses: clientState.current_turn.guesses.length
         }}
         agentInfo={{
-          numAgentsFound: 3,
-          numYourAgentsRemaining: 4
+          numAgentsFound: clientState.allAgents.found,
+          numYourAgentsRemaining: clientState.yourAgents.total - clientState.yourAgents.found
         }}
         onClickRestart={onClickRestart}
         message='Player 4'
