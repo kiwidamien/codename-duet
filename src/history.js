@@ -24,6 +24,10 @@ const parse_reason = (player, turn_end) => {
     return 'Selected assasian';
     case REASON.NOT_OVER:
     return 'Turn still progressing';
+    case REASON.USED_GUESS:
+    return 'Used all (regular) guesses';
+    case REASON.PASS:
+    return 'Passed';
     default:
     return 'Bad reason for turn end';
   }

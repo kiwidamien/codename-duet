@@ -14,7 +14,7 @@ const ClueRegion = ({clue, number, onClickPass, onClickSubmit, canPass, canClue}
   let elem;
   if (canPass){
     elem = (
-      <button type="submit" onClick={onClickPass}>Pass</button>
+      <button type="submit" className='submit-button' onClick={onClickPass}>Pass</button>
     );
   }
   if (canClue){
