@@ -74,10 +74,12 @@ const NewGameForm = () => {
     </div>
   </form>
   <Modal isOpen={newGameURLs[0]}>
-  <ul>
-    <li><Link to={`/game/${newGameURLs[0]}`}>Your game (link)</Link></li>
-    <li>URL to send to friend (their game): {`${CLIENT_URL}/game/${newGameURLs[1]}`}</li>
-  </ul>
+    Created game with name {name || 'default'}
+    <ul>
+      <li><Link to={`/game/${newGameURLs[0]}`}>Your game (link)</Link></li>
+      <li>URL to send to friend (their game): {`${CLIENT_URL}/game/${newGameURLs[1]}`}</li>
+    </ul>
+    <Link to='/'>Return to Lobby</Link>
   </Modal>
   </div>
 )
