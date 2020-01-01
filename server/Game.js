@@ -233,6 +233,27 @@ class Game{
         return (num_agents - this.numAgentsRevealed());
     }
 
+    totalAgents(){
+      const total_number_agents = this.cards.map((card) => {
+        return card.identity.some( (element) => (element === STATUS.AGENT) );
+      }).reduce( (acc, val) => acc + val, 0);
+      // Assumes that number of agents for player 0 === number of agents for player 1
+      const agents_per_player = this.cards.map((card) => {
+        return card.identity[0] === STATUS.AGENT;
+      }).reduce( (acc, val) => acc + val, 0);
+      return {
+        total_agents: total_number_agents,
+        agents_per_player
+      };
+    }
+
+    numOfPlayerAgentsRevealed(playerIndex){
+      const revealed_agent = this.cards.map((card) => {
+        return (card.identity[playerIndex] === STATUS.AGENT) && (card.revealed[playerIndex] === STATUS.AGENT);
+      });
+      return revealed_agent.reduce( (acc, val) => acc + val, 0);
+    }
+
     isAssassianRevealed(){
         const revealed_assassians = this.cards.map( (card) => {
             return card.revealed.some((element) => (element === STATUS.ASSASIAN))

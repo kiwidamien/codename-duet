@@ -6,6 +6,7 @@ const gameStateToMap = (game, playerNumber) =>{
 
 
 const getClientState = (game, {playerIndex}) => {
+    const numAgents = game.totalAgents()
     const clientState = {
         cards: game.cards.map( (card) => {
             return {
@@ -22,8 +23,10 @@ const getClientState = (game, {playerIndex}) => {
         canClue: game.canGiveClue({playerIndex}),
         canPass: game.canPass({playerIndex}),
         mapState: gameStateToMap(game, 1 - playerIndex),
-        allAgents: {found: game.numAgentsRevealed(), total: 15},
-        yourAgents: {found: 9 - game.numAgentsRemaining()[playerIndex], total: 9}
+        allAgents: {found: game.numAgentsRevealed(),
+                    total: numAgents.total_agents},
+        yourAgents: {found: numAgents.agents_per_player - game.numOfPlayerAgentsRevealed(playerIndex),
+                     total: numAgents.agents_per_player}
     };
 
     return clientState;
