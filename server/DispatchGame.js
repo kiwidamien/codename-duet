@@ -29,7 +29,7 @@ const getClientState = (game, {playerIndex}) => {
                      total: numAgents.agents_per_player},
         theirAgents: {found: numAgents.agents_per_player - game.numOfPlayerAgentsRevealed(1-playerIndex),
                      total: numAgents.agents_per_player},
-        players: game.playerNames;
+        players: game.playerNames
     };
 
     return clientState;
