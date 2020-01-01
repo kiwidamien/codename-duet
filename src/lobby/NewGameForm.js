@@ -42,11 +42,12 @@ const NewGameForm = () => {
     <div class="upper-level-new-game">
     <h2>New Game</h2>
     <form className="new-game" onSubmit={(e) => makeNewGame(e, name, setNewGameURLs, words)}>
-    <label htmlFor="name">Name</label>
+    <label htmlFor="name">Name:</label>
     <input
       type="text"
       id="name"
       value={name}
+      placeholder='name to identify game in lobby'
       onChange={e => setName(e.target.value)}
     />
     <div class="word-selection-container">

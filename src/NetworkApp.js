@@ -76,8 +76,6 @@ class NetworkApp extends Component {
 
     return (
       <div>
-        Game ID: {this.props.player_game_id}
-
         <Client
          clientState={this.state.clientState}
          gameStateDispatch={(action) => this.clientAction(action)}

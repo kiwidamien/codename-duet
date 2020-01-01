@@ -2,8 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import './info.css';
 
-function getAgentStatus({numAgentsFound, numYourAgentsRemaining}){
-  return `Found ${numAgentsFound} of 15 Agents (${9-numYourAgentsRemaining} of your 9 Remaining)`;
+function getAgentStatus({numAgentsFound, numYourAgentsRemaining, numTheirAgentsRemaining}){
+  return `Found ${numAgentsFound} of 15 Agents. (You have ${9-numYourAgentsRemaining} of 9 to guess, your partner has ${9 - numTheirAgentsRemaining} of 9 to guess)`;
 }
 
 function getMessage({canClue, canClick, clueInfo, turnNumber, turnPhase}){

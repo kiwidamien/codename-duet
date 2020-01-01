@@ -3,10 +3,11 @@ import './history.css';
 import {STATUS, REASON} from './constants.js';
 
 
-function History({turns}){
+function History({turns, playerNames}){
+  playerNames = playerNames || ['Player 0', 'Player 1'];
   return (
     <div className="history-area">
-      {turns.map( (turn, index) => HistoryTurn({...turn, turn_number: index+1, player: turn.player_clue}))}
+      {turns.map( (turn, index) => HistoryTurn({...turn, turn_number: index+1, player: turn.player_clue, playerNames}))}
     </div>
   );
 }
@@ -34,7 +35,7 @@ const parse_reason = (player, turn_end) => {
 }
 
 
-function HistoryTurn({player, clue, number, guesses, turn_end, turn_number}){
+function HistoryTurn({player, playerNames, clue, number, guesses, turn_end, turn_number}){
   if (!clue){
     return (
       <div><i>Waiting on clue...</i></div>
@@ -43,7 +44,7 @@ function HistoryTurn({player, clue, number, guesses, turn_end, turn_number}){
   return (
     <div>
       <div className='turn_number'>Turn number {turn_number}</div>
-      Player {player} gave <span className="clue-word">{clue}</span> for <span className="clue-number">{number}</span>
+      {playerNames[player]} gave <span className="clue-word">{clue}</span> for <span className="clue-number">{number}</span>
       <ul>
         {guesses.map( (guess) => GuessRecord(guess) )}
       </ul>

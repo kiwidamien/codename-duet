@@ -63,7 +63,8 @@ function Client({clientState, gameStateDispatch, player}) {
         }}
         agentInfo={{
           numAgentsFound: clientState.allAgents.found,
-          numYourAgentsRemaining: clientState.yourAgents.total - clientState.yourAgents.found
+          numYourAgentsRemaining: clientState.yourAgents.total - clientState.yourAgents.found,
+          numTheirAgentsRemaining: clientState.theirAgents.total - clientState.theirAgents.found
         }}
         onClickRestart={onClickRestart}
         message='Player 4'
@@ -76,7 +77,7 @@ function Client({clientState, gameStateDispatch, player}) {
           handleClickOnCard={clickOnCard}
           canClick={clientState.canClick}
         />
-        <History turns={clientState.history}/>
+        <History turns={clientState.history} playerNames={clientState.players}/>
 
         <ClueRegion
           clue={clientState.current_turn.clue}
