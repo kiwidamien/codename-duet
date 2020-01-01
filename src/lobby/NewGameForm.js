@@ -6,16 +6,22 @@ import {NEW_GAME_URL, CLIENT_URL} from '../constants.js';
 import './new_game.css';
 
 
-const makeNewGame = async (event, name, setNewGameURLs, words) => {
+const makeNewGame = async (event, name, setNewGameURLs, words, playerNames) => {
   event.preventDefault();
   console.log('Making a new game');
   if ((!words) || (!words[0])){
     words = getDefaultWords();
   }
+  if ((!playerNames) || (playerNames.length !== 2)){
+    playerNames = ['Player 0', 'Player 1'];
+  }
+  
+  playerNames = playerNames.map( (playerName, index) => playerName ? playerName : `Player ${index}`);
+  
   console.log(JSON.stringify({name, words}))
   fetch(NEW_GAME_URL, {
     method: 'post',
-    body: JSON.stringify({name, words}),
+    body: JSON.stringify({name, words, playerNames}),
     headers: {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
@@ -37,11 +43,12 @@ const NewGameForm = () => {
   const [name, setName] = useState('');
   const [newGameURLs, setNewGameURLs] = useState(['', '']);
   const [words, setWords] = useState(drawRandomWords());
-
+  const [playerNames, setPlayerNames] = useState(['','']);
+  
   return (
     <div class="upper-level-new-game">
     <h2>New Game</h2>
-    <form className="new-game" onSubmit={(e) => makeNewGame(e, name, setNewGameURLs, words)}>
+    <form className="new-game" onSubmit={(e) => makeNewGame(e, name, setNewGameURLs, words, playerNames)}>
     <label htmlFor="name">Name:</label>
     <input
       type="text"
@@ -49,6 +56,22 @@ const NewGameForm = () => {
       value={name}
       placeholder='name to identify game in lobby'
       onChange={e => setName(e.target.value)}
+    />
+    <label htmlFor="playerZeroName">First Player Name</label>
+    <input
+      type="text"
+      id="playerZeroName"
+      value={playerNames[0]}
+      placeholder="name to id player (blank will be 'Player 0')"
+      onChange={e => setPlayerNames([e.target.value, playerName[1]])}
+    />
+    <label htmlFor="playerOneName">Second Player Name</label>
+    <input
+      type="text"
+      id="playerOneName"
+      value={playerNames[1]}
+      placeholder="name to id player (blank will be 'Player 0')"
+      onChange={e => setPlayerNames([playerName[0], e.target.value])}
     />
     <div class="word-selection-container">
       <div class="new-word-grid">

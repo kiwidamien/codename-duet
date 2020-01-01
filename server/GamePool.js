@@ -29,13 +29,13 @@ class GamePool{
     return hashValue;
   }
 
-  makeNewGame(gameName, words){
-    const newGame = new Game(words);
+  makeNewGame(gameName, words, playerNames){
+    const newGame = new Game(words, playerNames);
     const hash1 = this._getNewHashValue();
     const hash2 = this._getNewHashValue();
     const gameHash = parseInt(hash1.toString() + hash2.toString());
-    GamePlayerHash[hash1] = {gameName, game: newGame, playerIndex: 0, otherPlayerHash: hash2, gameHash};
-    GamePlayerHash[hash2] = {gameName, game: newGame, playerIndex: 1, otherPlayerHash: hash1, gameHash};
+    GamePlayerHash[hash1] = {gameName, game: newGame, playerIndex: 0, otherPlayerHash: hash2, gameHash, playerNames};
+    GamePlayerHash[hash2] = {gameName, game: newGame, playerIndex: 1, otherPlayerHash: hash1, gameHash, playerNames};
     GameHash[gameHash] = [hash1, hash2];
     return [hash1, hash2, gameHash];
   }

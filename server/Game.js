@@ -100,7 +100,8 @@ const DefaultWords = ['apple', 'mandarin', 'persimmon', 'javascript', 'kiwi',
 
 
 class Game{
-    constructor(words){
+    constructor(words, playerNames){
+      this.playerNames = (playerNames || ['', '']).map( (name, index) => name ? name : `Player ${index}`);
       this.restart(words);
     }
 
