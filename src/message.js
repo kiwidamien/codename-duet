@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import './info.css';
 
 function getAgentStatus({numAgentsFound, numYourAgentsRemaining}){
@@ -28,6 +29,8 @@ function Message(data_pkg){
         <div className="info-area">
           Game Over!
           <button onClick={onClickRestart}>Play Again?</button>
+          or 
+          <Link to='/'>return to the lobby</Link>
         </div>
       );
     }
