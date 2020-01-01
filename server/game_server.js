@@ -43,7 +43,7 @@ app.get('/make_new_game', (request, response, next) => {
 app.post('/make_new_game', (request, response, next) => {
   const name = request.body['name'] || 'default';
   const words = request.body['words'] || null;
-  const playerNames = require.body['playerNames'] || ['Player 0', 'Player 1'];
+  const playerNames = request.body['playerNames'] || ['Player 0', 'Player 1'];
   const [hash1, hash2] = GLOBAL_POOL.makeNewGame(name, words, playerNames);
   return response.send([hash1, hash2]);
 })

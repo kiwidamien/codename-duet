@@ -60,3 +60,17 @@
   color: #fff;
   border: none;
 }
+
+.input-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  vertical-align: middle;
+  padding: 0px 10px;
+}
+
+.input-row > label {
+  vertical-align: middle;
+  display: flex;
+  align-items: center;
+}

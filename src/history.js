@@ -44,7 +44,7 @@ function HistoryTurn({player, playerNames, clue, number, guesses, turn_end, turn
   return (
     <div>
       <div className='turn_number'>Turn number {turn_number}</div>
-      {playerNames[player]} gave <span className="clue-word">{clue}</span> for <span className="clue-number">{number}</span>
+      <span className="agent-name">{playerNames[player]}</span> gave <span className="clue-word">{clue}</span> for <span className="clue-number">{number}</span>
       <ul>
         {guesses.map( (guess) => GuessRecord(guess) )}
       </ul>

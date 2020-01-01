@@ -33,12 +33,13 @@ const Lobby = () => {
   Object.keys(gameInfo).forEach( (gamePlayerHash) => {
     const gamePlayerCombo = gameInfo[gamePlayerHash];
     const gameHash = gamePlayerCombo['gameHash'];
+    const playerNames = gamePlayerCombo.game.playerNames || ['Player 0', 'Player 1'];
     if (!theGames[gameHash]){
-      theGames[gameHash] = {gameName: gamePlayerCombo.gameName, players: ['', '']};
+      theGames[gameHash] = {gameName: gamePlayerCombo.gameName, players: ['', ''], playerNames};
     }
     theGames[gameHash].players[gamePlayerCombo.playerIndex] = `/game/${gamePlayerHash}`;
   });
-
+  console.log(gameInfo);
   return (
     <div>
 
@@ -57,8 +58,8 @@ const Lobby = () => {
             <div className="game-box">
             <b>Game <span>{thisGame.gameName}</span>:</b>
               <div className="game-box-links">
-                <Link to={thisGame.players[0]}>Player 0 Link</Link>
-                <Link to={thisGame.players[1]}>Player 1 Link</Link>
+                <Link to={thisGame.players[0]}>{thisGame.playerNames[0]}'s Link</Link>
+                <Link to={thisGame.players[1]}>{thisGame.playerNames[1]}'s Link</Link>
               </div>
             </div>
           )

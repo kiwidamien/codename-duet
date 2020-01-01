@@ -12,3 +12,7 @@
 .clue-number{
   font-variant: small-caps;
 }
+
+.agent-name{
+  font-weight: bold;
+}

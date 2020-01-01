@@ -49,30 +49,36 @@ const NewGameForm = () => {
     <div class="upper-level-new-game">
     <h2>New Game</h2>
     <form className="new-game" onSubmit={(e) => makeNewGame(e, name, setNewGameURLs, words, playerNames)}>
-    <label htmlFor="name">Name:</label>
-    <input
-      type="text"
-      id="name"
-      value={name}
-      placeholder='name to identify game in lobby'
-      onChange={e => setName(e.target.value)}
-    />
-    <label htmlFor="playerZeroName">First Player Name</label>
-    <input
-      type="text"
-      id="playerZeroName"
-      value={playerNames[0]}
-      placeholder="name to id player (blank will be 'Player 0')"
-      onChange={e => setPlayerNames([e.target.value, playerName[1]])}
-    />
-    <label htmlFor="playerOneName">Second Player Name</label>
-    <input
-      type="text"
-      id="playerOneName"
-      value={playerNames[1]}
-      placeholder="name to id player (blank will be 'Player 0')"
-      onChange={e => setPlayerNames([playerName[0], e.target.value])}
-    />
+    <div className="input-row">
+      <label htmlFor="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        value={name}
+        placeholder='name to identify game in lobby'
+        onChange={e => setName(e.target.value)}
+        />
+    </div>
+    <div className="input-row">
+      <label htmlFor="playerZeroName">First Player Name:</label>
+      <input
+        type="text"
+        id="playerZeroName"
+        value={playerNames[0]}
+        placeholder="name to id player (leave blank for 'Player 0')"
+        onChange={e => setPlayerNames([e.target.value, playerNames[1]])}
+      />
+    </div>
+    <div className="input-row">
+      <label htmlFor="playerOneName">Second Player Name:</label>
+      <input
+        type="text"
+        id="playerOneName"
+        value={playerNames[1]}
+        placeholder="name to id player (leave blank for'Player 1')"
+        onChange={e => setPlayerNames([playerNames[0], e.target.value])}
+      />
+    </div>
     <div class="word-selection-container">
       <div class="new-word-grid">
         {words.map( (word, index) => <input
