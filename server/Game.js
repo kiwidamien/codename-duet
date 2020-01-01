@@ -263,8 +263,16 @@ class Game{
     }
 
     makeNewTurn(reason){
+      const nextPlayer = () => {
+        const playerIndex = this.current_turn.player_clue;
+        const otherPlayer = 1 - playerIndex;
+        const {agents_per_player} = this.totalAgents();
+        const numAgentsToClue = agents_per_player - this.numOfPlayerAgentsRevealed(playerIndex);
+        return (numAgentsToClue) > 0 ? otherPlayer : playerIndex;
+      }
+
         const newTurn = {
-            player_clue: 1 - this.current_turn.player_clue,
+            player_clue: nextPlayer(),
             phase: PHASE.CLUE,
             clue: '',
             number: 2,

@@ -7,7 +7,7 @@ function History({turns, playerNames}){
   playerNames = playerNames || ['Player 0', 'Player 1'];
   return (
     <div className="history-area">
-      {turns.map( (turn, index) => HistoryTurn({...turn, turn_number: index+1, player: turn.player_clue, playerNames}))}
+      {turns.map( (turn, index) => HistoryTurn({...turn, turn_number: index+1, player: turn.player_clue, playerNames})).reverse()}
     </div>
   );
 }
