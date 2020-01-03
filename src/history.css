@@ -14,5 +14,16 @@
 }
 
 .agent-name{
+  font-variant: small-caps;
+}
+
+.turn_number{
+  padding-top: 1em;
+  padding-bottom: 0.3em;
   font-weight: bold;
+  text-decoration: underline;
+}
+
+.history-container{
+  margin: 0 1ex;
 }
