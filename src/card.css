@@ -20,6 +20,7 @@
     align-content: center;
     justify-content: center;
     display: flex;
+    cursor: pointer;
 }
 
 .card-word{
@@ -48,6 +49,19 @@
     background-color: rgb(237, 185, 122);
 }
 
+.card-agent-overlay{
+  background-color: rgba(57, 167, 57, 0.15);
+}
+
+.card-assasian-overlay{
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.card-neutral-overlay{
+  background-color: rgba(57, 167, 57, 0.15);
+}
+
 .disabled{
   opacity: 40%;
+  cursor: default;
 }

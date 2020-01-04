@@ -7,13 +7,18 @@ function getAgentStatus({numAgentsFound, numYourAgentsRemaining, numTheirAgentsR
 }
 
 function getMessage({canClue, canClick, clueInfo, turnNumber, turnPhase}){
-  const prefix = `Turn number ${turnNumber + 1}`;
+  const oneBasedTurnNumber = turnNumber + 1;
+  let prefix = `Turn number ${oneBasedTurnNumber}:`;
+  if (oneBasedTurnNumber > 9){
+    prefix = "You Lose! 😞 but keep going if you'd like!\n";
+  }
+
   if (canClue){
-    return  `${prefix}: Waiting for you to send clue`;
+    return  `${prefix} Waiting for you to send clue`;
   }
   if (canClick){
     const {word, number, guesses} = clueInfo;
-    return `${prefix}: Waiting for you to click (clue is ${word}; guessed ${guesses} of ${number})`;
+    return `${prefix} Waiting for you to click (clue is ${word}; guessed ${guesses} of ${number})`;
   }
   // What are we waiting on the other player for?
   return `Waiting for other player to ${turnPhase === 'clue' ? 'send clue': 'click cards'}`;
