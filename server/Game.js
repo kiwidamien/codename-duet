@@ -100,8 +100,9 @@ const DefaultWords = ['apple', 'mandarin', 'persimmon', 'javascript', 'kiwi',
 
 
 class Game{
-    constructor(words, playerNames){
+    constructor(words, playerNames, trackNumGuesses){
       this.playerNames = (playerNames || ['', '']).map( (name, index) => name ? name : `Player ${index}`);
+      this.trackNumGuesses = trackNumGuesses;
       this.restart(words);
     }
 
@@ -288,6 +289,23 @@ class Game{
         this.game_over = (this.isAssassianRevealed()) || (this.numAgentsRemaining() === 0);
     }
 
+    isOutOfGuesses(){
+      if (this.current_turn.phase !== PHASE.CLICK){
+        return false;
+      }
+      if (this.current_turn.number <= 0){
+        return false;
+      }
+      if (!this.trackNumGuesses){
+        return false;
+      }
+      const guessNumber = this.current_turn.guesses.length;
+      if (guessNumber <= this.current_turn.number){
+        return false;
+      }
+      return true;
+    }
+
     _updateStateOnClick({word, revealed}){
         this.current_turn.guesses.push({
             word, result: revealed
@@ -316,12 +334,9 @@ class Game{
             return;
         }
 
-        const guessNumber = this.current_turn.guesses.length;
-        if ((guessNumber === this.current_turn.number + 1) &&
-            (this.current_turn.number > 0) &&
-            (this.current_turn.phase === PHASE.CLICK)){
-                this.makeNewTurn(REASON.OUT_OF_GUESSES);
-            }
+        if (this.isOutOfGuesses()){
+          this.makeNewTurn(REASON.OUT_OF_GUESSES);
+        }
     }
 }
 

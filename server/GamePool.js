@@ -29,8 +29,8 @@ class GamePool{
     return hashValue;
   }
 
-  makeNewGame(gameName, words, playerNames){
-    const newGame = new Game(words, playerNames);
+  makeNewGame(gameName, words, playerNames, trackNumGuesses){
+    const newGame = new Game(words, playerNames, trackNumGuesses);
     const hash1 = this._getNewHashValue();
     const hash2 = this._getNewHashValue();
     const gameHash = parseInt(hash1.toString() + hash2.toString());

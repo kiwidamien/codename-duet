@@ -36,7 +36,7 @@ app.get('/game_list', (request, response, next) => {
 app.get('/make_new_game', (request, response, next) => {
   const name = request.query.name || 'default';
   console.log(`making new game ${name}`);
-  const [hash1, hash2] = GLOBAL_POOL.makeNewGame(name);
+  const [hash1, hash2] = GLOBAL_POOL.makeNewGame(name, null, false);
   return response.send([hash1, hash2]);
 })
 
