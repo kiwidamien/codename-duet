@@ -44,7 +44,8 @@ app.post('/make_new_game', (request, response, next) => {
   const name = request.body['name'] || 'default';
   const words = request.body['words'] || null;
   const playerNames = request.body['playerNames'] || ['Player 0', 'Player 1'];
-  const [hash1, hash2] = GLOBAL_POOL.makeNewGame(name, words, playerNames);
+  const trackNumGuesses = request.body['trackNumGuesses'] || false;
+  const [hash1, hash2] = GLOBAL_POOL.makeNewGame(name, words, playerNames, trackNumGuesses);
   return response.send([hash1, hash2]);
 })
 
