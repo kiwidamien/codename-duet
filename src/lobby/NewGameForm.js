@@ -6,7 +6,7 @@ import {NEW_GAME_URL, CLIENT_URL} from '../constants.js';
 import './new_game.css';
 
 
-const makeNewGame = async (event, name, setNewGameURLs, words, playerNames) => {
+const makeNewGame = async (event, name, setNewGameURLs, words, playerNames, trackNumGuesses) => {
   event.preventDefault();
   console.log('Making a new game');
   if ((!words) || (!words[0])){
@@ -15,13 +15,13 @@ const makeNewGame = async (event, name, setNewGameURLs, words, playerNames) => {
   if ((!playerNames) || (playerNames.length !== 2)){
     playerNames = ['Player 0', 'Player 1'];
   }
-  
+
   playerNames = playerNames.map( (playerName, index) => playerName ? playerName : `Player ${index}`);
-  
+
   console.log(JSON.stringify({name, words}))
   fetch(NEW_GAME_URL, {
     method: 'post',
-    body: JSON.stringify({name, words, playerNames}),
+    body: JSON.stringify({name, words, playerNames, trackNumGuesses}),
     headers: {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
@@ -44,11 +44,12 @@ const NewGameForm = () => {
   const [newGameURLs, setNewGameURLs] = useState(['', '']);
   const [words, setWords] = useState(drawRandomWords());
   const [playerNames, setPlayerNames] = useState(['','']);
-  
+  const [trackNumGuesses, setTrackNumGuesses] = useState(true);
+
   return (
     <div class="upper-level-new-game">
     <h2>New Game</h2>
-    <form className="new-game" onSubmit={(e) => makeNewGame(e, name, setNewGameURLs, words, playerNames)}>
+    <form className="new-game" onSubmit={(e) => makeNewGame(e, name, setNewGameURLs, words, playerNames, trackNumGuesses)}>
     <div className="input-row">
       <label htmlFor="name">Name:</label>
       <input
@@ -92,6 +93,15 @@ const NewGameForm = () => {
             />)}
       </div>
 
+      <div className="input-row">
+        <label htmlFor="trackTurnNum">Only allow one additional guess per turn:</label>
+        <input
+          type="checkbox"
+          id="trackTurnNum"
+          checked={trackNumGuesses}
+          onChange={e => {setTrackNumGuesses(!trackNumGuesses);}}
+        />
+      </div>
       <div class="word-grid-controls">
         <button type="button" onClick={() => setWords(drawRandomWords())}>Random Draw</button>
         <button type="button" onClick={() => setWords(getDefaultWords())}>Default</button>
