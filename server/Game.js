@@ -66,19 +66,19 @@ const shuffle = (orig_array) => {
 }
 
 /*const TEST_CARDS = [
-    {word: 'apple', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN] },
+    {word: 'apple', identity: [STATUS.ASSASSIAN, STATUS.ASSASSIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN] },
     {word: 'mandarin', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'persimmon', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'javascript', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'kiwi', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'love', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'jedi', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
-    {word: 'clone', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'clone', identity: [STATUS.ASSASSIAN, STATUS.ASSASSIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'danish', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'tiramasu', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'landscape', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'wildlife', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
-    {word: 'hike', identity: [STATUS.ASSASIAN, STATUS.ASSASIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
+    {word: 'hike', identity: [STATUS.ASSASSIAN, STATUS.ASSASSIAN], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'embassy', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'parasite', identity: [STATUS.NEUTRAL, STATUS.NEUTRAL], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
     {word: 'elephant', identity: [STATUS.AGENT, STATUS.AGENT], revealed: [STATUS.UNKNOWN, STATUS.UNKNOWN]},
@@ -168,7 +168,7 @@ class Game{
         }
 
         switch(revealedIdentity){
-            case STATUS.ASSASIAN:
+            case STATUS.ASSASSIAN:
             case STATUS.AGENT:
                 thisCard.revealed = [revealedIdentity, revealedIdentity];
             break;
@@ -258,7 +258,7 @@ class Game{
 
     isAssassianRevealed(){
         const revealed_assassians = this.cards.map( (card) => {
-            return card.revealed.some((element) => (element === STATUS.ASSASIAN))
+            return card.revealed.some((element) => (element === STATUS.ASSASSIAN))
         } );
         return revealed_assassians.some( (element) => element);
     }
@@ -321,7 +321,7 @@ class Game{
                 return;
             break;
 
-            case STATUS.ASSASIAN:
+            case STATUS.ASSASSIAN:
                 this.history[this.history.length-1].turn_end = REASON.DEATH_GUESS;
             break;
 

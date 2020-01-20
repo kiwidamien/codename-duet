@@ -22,7 +22,7 @@ const parse_reason = (player, turn_end) => {
     case REASON.OUT_OF_GUESSES:
     return 'Ran out of guesses';
     case REASON.DEATH_GUESS:
-    return 'Selected assasian';
+    return 'Selected assassian';
     case REASON.NOT_OVER:
     return 'Turn still progressing';
     case REASON.USED_GUESS:
@@ -64,8 +64,8 @@ function GuessRecord({word, result}){
     case STATUS.NEUTRAL:
       inner_html = (<li>Bystander <span className="clue-word">{word}</span> identified</li>);
       break;
-    case STATUS.ASSASIAN:
-      inner_html = (<li>Assasian <span className="clue-word">{word}</span> contacted</li>);
+    case STATUS.ASSASSIAN:
+      inner_html = (<li>Assassian <span className="clue-word">{word}</span> contacted</li>);
       break;
     default:
       inner_html = (<li>UNKNOWN CASE</li>);

@@ -1,5 +1,5 @@
 const STATUS = {
-  ASSASIAN: 'assasian',
+  ASSASSIAN: 'assassian',
   AGENT: 'agent',
   NEUTRAL: 'neutral',
   UNKNOWN: 'unknown'
@@ -10,7 +10,7 @@ const REASON = {
   USED_GUESS: 'used all regular guesses',
   OUT_OF_GUESSES: 'used all regular guesses and catch up guess',
   BYSTANDER_GUESS: 'guessed a bystander',
-  DEATH_GUESS: 'guessed an assasian',
+  DEATH_GUESS: 'guessed an assassian',
   NOT_OVER: '',
   PASS: 'chose to pass',
 };
@@ -21,11 +21,11 @@ const PHASE = {
 };
 
 const DECK = [
-  [STATUS.ASSASIAN, STATUS.ASSASIAN],
-  [STATUS.ASSASIAN, STATUS.AGENT],
-  [STATUS.ASSASIAN, STATUS.NEUTRAL],
-  [STATUS.AGENT, STATUS.ASSASIAN],
-  [STATUS.NEUTRAL, STATUS.ASSASIAN],
+  [STATUS.ASSASSIAN, STATUS.ASSASSIAN],
+  [STATUS.ASSASSIAN, STATUS.AGENT],
+  [STATUS.ASSASSIAN, STATUS.NEUTRAL],
+  [STATUS.AGENT, STATUS.ASSASSIAN],
+  [STATUS.NEUTRAL, STATUS.ASSASSIAN],
   [STATUS.AGENT, STATUS.AGENT],
   [STATUS.AGENT, STATUS.AGENT],
   [STATUS.AGENT, STATUS.AGENT],

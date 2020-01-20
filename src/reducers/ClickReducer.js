@@ -9,7 +9,7 @@ const clickCard = (cardState, player) => {
   }
 
   switch(revealedIdentity){
-    case STATUS.ASSASIAN:
+    case STATUS.ASSASSIAN:
     case STATUS.AGENT:
     newCardState.revealed = [revealedIdentity, revealedIdentity];
     break;
@@ -27,8 +27,8 @@ const clickCard = (cardState, player) => {
 const processMessageOnClick = (revealedIdentity, oldMessage) => {
   let newMessage=oldMessage, gameOver = false;
   switch(revealedIdentity){
-    case STATUS.ASSASIAN:
-    newMessage = 'Assasian contacted, game over!';
+    case STATUS.ASSASSIAN:
+    newMessage = 'Assassian contacted, game over!';
     gameOver = true;
     break;
 
@@ -68,7 +68,7 @@ const updateTurnInfo = (gameState, revealedIdentity, player) => {
     newGameState = makeGameStateNewTurn(newGameState, player, REASON.BYSTANDER_GUESS);
     return newGameState;
 
-    case STATUS.ASSASIAN:
+    case STATUS.ASSASSIAN:
     newGameState.history[newGameState.history.length-1].turn_end = REASON.DEATH_GUESS;
     return newGameState;
 
