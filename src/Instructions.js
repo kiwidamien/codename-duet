@@ -51,7 +51,7 @@ const Instructions = () => {
                 <div>
                     <h4>Note on Assassian cards:</h4>
 
-                    There are 3 assassian cards on your map (black). One of them is an assassian
+                    There are 3 assassin cards on your map (black). One of them is an assassin
                     card for both of you, one is an agent that will respond to you, one is a bystander.
 
                     Storywise, this means that out of the three people that would eliminate your partner:
@@ -66,9 +66,9 @@ const Instructions = () => {
                 <h3>Hints</h3>
                 <ul>
                   <li>When guessing, start with the words you are most confident in (remember, your turn ends after the first incorrect guess).</li>
-                  <li>If you are really unsure, you can pass (instead of risking an assassian) after selecting at least one word.</li>
-                  <li>When giving clues, check to make sure that none of your clues can be associated with the assassian cards!</li>
-                  <li>Recall that one of the three assassian cards on your map is an agent for you -- i.e. you need to click on exactly one of the three cards you are trying to get your partner to avoid.</li>
+                  <li>If you are really unsure, you can pass (instead of risking an assassin) after selecting at least one word.</li>
+                  <li>When giving clues, check to make sure that none of your clues can be associated with the assassin cards!</li>
+                  <li>Recall that one of the three assassin cards on your map is an agent for you -- i.e. you need to click on exactly one of the three cards you are trying to get your partner to avoid.</li>
                 </ul>
 
             </div>
