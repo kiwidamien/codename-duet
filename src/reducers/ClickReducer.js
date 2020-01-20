@@ -28,7 +28,7 @@ const processMessageOnClick = (revealedIdentity, oldMessage) => {
   let newMessage=oldMessage, gameOver = false;
   switch(revealedIdentity){
     case STATUS.ASSASSIN:
-    newMessage = 'Assassian contacted, game over!';
+    newMessage = 'Assassin contacted, game over!';
     gameOver = true;
     break;
 

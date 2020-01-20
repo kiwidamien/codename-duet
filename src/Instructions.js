@@ -10,19 +10,19 @@ const Instructions = () => {
                 {`${isOpen ? 'Hide':'Show'} Instructions`}
             </div>
             <div className={`content ${isOpen ? '':'hide-div'}`}>
-                
+
                 <h3>Goal</h3>
                 The aim is to find all 15 agents (green) within 9 turns. How people act depends on
                 who approaches them -- you and your partner might get different responses from the
                 same person/card!
-                
+
                 <h3>Types of cards</h3>
                 <div>
                     Cards represent different types of agents:
                     <ul>
                         <li>Green: Agents to find (there are 9 green tiles)</li>
                         <li>Orange: Bystanders, selecting one will end your turn</li>
-                        <li>Black: Assassians, selection one will end the game</li>
+                        <li>Black: Assassins, selection one will end the game</li>
                     </ul>
                     You each have 9 agents for a total of 15 on the board (i.e. 3 agents will "talk" to
                     both of you)
@@ -35,11 +35,11 @@ const Instructions = () => {
                 </div>
 
                 <h3>A turn</h3>
-                
+
                 <div>
                 On each turn, one player is the <b>clue giver</b> and the other is the <b>guesser</b>.
                 </div>
-                
+
                 <div>
                 <ul>
                   <li><b>For the clue-giver:</b> Give <i>one word</i> as a clue, and a number of (green) words you are associating with your clue. Your goal is to get your partner to guess all the <b>green</b> words on your map, regardless of information on your board.</li>
@@ -47,9 +47,9 @@ const Instructions = () => {
                 </ul>
                 At the end of each turn, the clue giver and the guesser will swap roles.
                 </div>
-                
+
                 <div>
-                    <h4>Note on Assassian cards:</h4>
+                    <h4>Note on Assassin cards:</h4>
 
                     There are 3 assassin cards on your map (black). One of them is an assassin
                     card for both of you, one is an agent that will respond to you, one is a bystander.
@@ -59,10 +59,10 @@ const Instructions = () => {
                         <li>One trusts you but not your partner  (i.e. an agent that only you can approach)</li>
                         <li>One would ignore you (a bystander) but will defend herself against your partner with deadly force</li>
                         <li>One would eliminate either of you gladly</li>
-                    </ul> 
+                    </ul>
                     Sadly, you only know how any given person/card responds to your partner.
                 </div>
-                
+
                 <h3>Hints</h3>
                 <ul>
                   <li>When guessing, start with the words you are most confident in (remember, your turn ends after the first incorrect guess).</li>

@@ -256,7 +256,7 @@ class Game{
       return revealed_agent.reduce( (acc, val) => acc + val, 0);
     }
 
-    isAssassianRevealed(){
+    isAssassinRevealed(){
         const revealed_assassins = this.cards.map( (card) => {
             return card.revealed.some((element) => (element === STATUS.ASSASSIN))
         } );
@@ -286,7 +286,7 @@ class Game{
 
     _updateGameOverStatus(){
         // this method is idempotent
-        this.game_over = (this.isAssassianRevealed()) || (this.numAgentsRemaining() === 0);
+        this.game_over = (this.isAssassinRevealed()) || (this.numAgentsRemaining() === 0);
     }
 
     isOutOfGuesses(){

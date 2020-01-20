@@ -65,7 +65,7 @@ function GuessRecord({word, result}){
       inner_html = (<li>Bystander <span className="clue-word">{word}</span> identified</li>);
       break;
     case STATUS.ASSASSIN:
-      inner_html = (<li>Assassian <span className="clue-word">{word}</span> contacted</li>);
+      inner_html = (<li>Assassin <span className="clue-word">{word}</span> contacted</li>);
       break;
     default:
       inner_html = (<li>UNKNOWN CASE</li>);
