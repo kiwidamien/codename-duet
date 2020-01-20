@@ -1,5 +1,5 @@
 const STATUS = {
-  ASSASSIAN: 'ASSASSIAN',
+  ASSASSIAN: 'assassian',
   AGENT: 'agent',
   NEUTRAL: 'neutral',
   UNKNOWN: 'unknown'
