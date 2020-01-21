@@ -15,9 +15,9 @@ const newPassReducer = (socket, {hashValue}) => {
   socket.emit('pass', {hashValue});
 }
 
-const restartGame = (socket, {hashValue}) => {
+const restartGame = (socket, {hashValue, newWords}) => {
   console.log(`Restarting game ${hashValue}`)
-  socket.emit('restart', {hashValue});
+  socket.emit('restart', {hashValue, newWords});
 }
 
 export {newClueSentReducer, newClickCardReducer, newPassReducer, restartGame};
