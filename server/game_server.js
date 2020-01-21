@@ -1,5 +1,5 @@
 //import {STATUS, DECK, REASON, PHASE} from './constants.js';
-const CONSTANTS = require('./constants.js');
+//const CONSTANTS = require('./constants.js');
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
@@ -9,7 +9,7 @@ const cors = require('cors');
 const {dispatchClickCard, dispatchClickPass, dispatchSendClue, dispatchRefresh, dispatchRestart} = require('./DispatchGame.js');
 
 //const Game = require('./Game.js');
-const {GamePlayerHash, GamePool, GLOBAL_POOL} = require('./GamePool.js');
+const {GamePlayerHash, GLOBAL_POOL} = require('./GamePool.js');
 const PORT = process.env.PORT || 2000;
 
 console.log(GamePlayerHash);
@@ -140,8 +140,10 @@ IO.sockets.on('connection', (socket) => {
     sendRefreshState({clientStates}, hashValue);
   });
 
-  socket.on('restart', ({hashValue}) => {
-    safeRouteFromHash({hashValue}, hashValue, dispatchRestart);
+  socket.on('restart', ({hashValue, newWords}) => {
+    const safeNewWords = newWords || [];
+    safeRouteFromHash({hashValue, newWords: safeNewWords},
+      hashValue, dispatchRestart);
   });
 
 });

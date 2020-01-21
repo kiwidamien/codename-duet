@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 import ClueRegion from './ClueRegion.js';
 import AlertDiv from './AlertDiv.js';
 import Instructions from './Instructions.js';
-
+import drawRandomWords from './lobby/words.js';
 
 function Client({clientState, gameStateDispatch, player}) {
 
@@ -41,7 +41,8 @@ function Client({clientState, gameStateDispatch, player}) {
     console.log('Restarting game');
     gameStateDispatch({
       player,
-      type: 'RESTART'
+      type: 'RESTART',
+      newWords: drawRandomWords()
     });
   }
 
@@ -76,6 +77,8 @@ function Client({clientState, gameStateDispatch, player}) {
           card_objects={clientState.cards}
           handleClickOnCard={clickOnCard}
           canClick={clientState.canClick}
+          myLocations={clientState.mapState}
+          showMapState={true}
         />
         <History turns={clientState.history} playerNames={clientState.players}/>
 
