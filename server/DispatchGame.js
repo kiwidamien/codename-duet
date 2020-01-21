@@ -67,8 +67,8 @@ const dispatchRefresh = (game, {playerIndex}) => {
     return getClientStates(game, true);
 }
 
-const dispatchRestart = (game, {playerIndex}) => {
-    game.restart();
+const dispatchRestart = (game, {playerIndex, newWords}) => {
+    game.restart(newWords);
     return getClientStates(game, true);
 }
 

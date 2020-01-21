@@ -1,7 +1,7 @@
 import React from 'react';
 import './card.css'
 
-function CardLayout({card_objects, handleClickOnCard, canClick}){
+function CardLayout({card_objects, handleClickOnCard, canClick, mapLocations, showMapState}){
   if (!canClick){
     handleClickOnCard = ()=>{};
   }
