@@ -38,7 +38,7 @@ function Client({clientState, gameStateDispatch, player}) {
   }
 
   const onClickRestart = () => {
-    console.log('Restarting game');
+    console.log('Restarting game****');
     const newWords = drawRandomWords();
     console.log(`Restarting game with ${newWords}`);
     console.log(newWords);
