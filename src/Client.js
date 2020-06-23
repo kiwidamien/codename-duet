@@ -1,4 +1,6 @@
 import React from 'react';
+import { useWindowSize } from "@reach/window-size";
+import Confetti from 'react-confetti';
 
 import Map from './map.js';
 import {CardLayout} from './card.js';
@@ -49,10 +51,15 @@ function Client({clientState, gameStateDispatch, player}) {
     });
   }
 
+  const { width, height } = useWindowSize();
+  const didWin = (clientState.allAgents.total===clientState.allAgents.found);
+  
   return (
     <div className="App">
 
       {clientState.validationError && <AlertDiv duration={5000} message={clientState.validationError}/>}
+
+      {didWin && <Confetti width={width} height={height}/>}
 
       <Message
         canClue={clientState.canClue}
