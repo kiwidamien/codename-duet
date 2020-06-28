@@ -47,7 +47,7 @@ const WORDLIST = [
   'pizza',
   'wool',
   'attic',
-  'marthon',
+  'marathon',
   'squash',
   'sherlock',
   'wood',
